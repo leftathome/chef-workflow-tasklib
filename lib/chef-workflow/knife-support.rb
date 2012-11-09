@@ -6,7 +6,8 @@ class KnifeSupport
     :cookbooks_path         => File.join(Dir.pwd, 'cookbooks'),
     :chef_config_path       => File.join(Dir.pwd, '.chef'),
     :knife_config_path      => File.join(Dir.pwd, '.chef', 'knife.rb'),
-    :roles_path             => File.join(Dir.pwd, 'roles')
+    :roles_path             => File.join(Dir.pwd, 'roles'),
+    :environments_path      => File.join(Dir.pwd, 'environments')
   }
 
   DEFAULTS[:knife_config_template] = <<-EOF
