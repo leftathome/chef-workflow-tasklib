@@ -1,5 +1,6 @@
 begin
   Rake::Task["cookbook:resolve"].clear
+  Rake::Task["cookbook:update"].clear
 rescue
 end
 
