@@ -5,6 +5,8 @@ require 'chef-workflow/ip-support'
 require 'chef-workflow/knife-support'
 require 'chef-workflow/vagrant-support'
 
+require 'chef-workflow/tasks/bootstrap/knife'
+
 namespace :chef_server do
   desc "Create and write a knife configuration to #{$knife_support.knife_config_path} suitable for creating new chef servers."
   task :build_knife_config do

@@ -28,7 +28,7 @@ class KnifeSupport
   def initialize(options={})
     DEFAULTS.each do |key, value|
       instance_variable_set(
-        "@#{key}",
+        "@#{key}", 
         options.has_key?(key) ? options[key] : DEFAULTS[key]
       )
     end
