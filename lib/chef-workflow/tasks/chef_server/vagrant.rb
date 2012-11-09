@@ -5,20 +5,21 @@ require 'fileutils'
 
 require 'chef-workflow/ip-support'
 require 'chef-workflow/knife-support'
-
-CHEF_SERVER_PRISON_FILE = File.join(Dir.pwd, '.prisons', 'chef-server')
+require 'chef-workflow/vagrant-support'
 
 namespace :chef_server do
-  desc "Create and write a knife configuration to #{KNIFE_CONFIG_PATH} suitable for creating new chef servers."
+  desc "Create and write a knife configuration to #{$knife_support.options[:knife_config_path]} suitable for creating new chef servers."
   task :build_knife_config do
     $knife_support.build_knife_config
-    ENV["CHEF_CONFIG"] = $knife_support.options[:knife_config_path] # this is what knife-dsl needs to know what config to use
+
+    # this is what knife-dsl needs to know what config to use
+    ENV["CHEF_CONFIG"] = $knife_support.options[:knife_config_path]
   end
 
   namespace :create do
     task :allocate_vagrant_ip do
       $ip_assignment.seed_vagrant_ips
-      $ip_assignment.assign_role_ip("chef-server", unused_ip) 
+      $ip_assignment.assign_role_ip("chef-server", $ip_assignment.unused_ip) 
     end
 
     desc "Create a chef server in a vagrant machine."
@@ -35,8 +36,7 @@ namespace :chef_server do
                  vagrant_up
                end
 
-      FileUtils.mkdir_p(File.dirname(CHEF_SERVER_PRISON_FILE))
-      File.binwrite(CHEF_SERVER_PRISON_FILE, Marshal.dump([prison.dir, prison.env_opts]))
+      $vagrant_support.write_prison('chef-server', prison)
       result = knife %W[server bootstrap standalone --ssh-user vagrant --node-name test-chef-server --host #{chef_server_ip} -P vagrant]
 
       fail if result > 0
@@ -46,10 +46,11 @@ namespace :chef_server do
   namespace :destroy do
     desc "Destroy the last chef server created with vagrant"
     task :vagrant do
-      if File.exist?(CHEF_SERVER_PRISON_FILE)
-        prison_dir, prison_env_opts = Marshal.load(File.binread(CHEF_SERVER_PRISON_FILE))
+      prison_dir, prison_env_opts = $vagrant_support.read_prison('chef-server')
+
+      if prison_dir and prison_env_opts
         Vagrant::Prison.cleanup(prison_dir, Vagrant::Environment.new(prison_env_opts))
-        FileUtils.rm_f(CHEF_SERVER_PRISON_FILE)
+        $vagrant_support.remove_prison('chef-server')
       end
     end
   end

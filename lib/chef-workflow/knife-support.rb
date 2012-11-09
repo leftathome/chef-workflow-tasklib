@@ -1,3 +1,5 @@
+require 'fileutils'
+
 class KnifeSupport
   CHEF_CONFIG_PATH  = File.join(Dir.pwd, '.chef')
   KNIFE_CONFIG_PATH = File.join(CHEF_CONFIG_PATH, 'knife.rb')
@@ -14,14 +16,14 @@ class KnifeSupport
 
   attr_accessor :options
 
-  def initialize(options)
+  def initialize(options={})
     [
       :chef_config_path, 
       :knife_config_path, 
       :knife_config_template
     ].each do |key|
       unless options[key]
-        options[key] = const_get(key.to_s.upcase)
+        options[key] = self.class.const_get(key.to_s.upcase)
       end
     end
 
