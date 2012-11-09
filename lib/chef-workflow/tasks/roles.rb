@@ -1,3 +1,4 @@
+require 'knife/dsl'
 require 'chef-workflow/tasks/bootstrap/knife'
 
 namespace :roles do
