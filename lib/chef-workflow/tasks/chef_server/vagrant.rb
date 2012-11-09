@@ -8,9 +8,9 @@ require 'chef-workflow/vagrant-support'
 require 'chef-workflow/tasks/bootstrap/knife'
 
 namespace :chef_server do
-  desc "Create and write a knife configuration to #{KnifeSupport.knife_config_path} suitable for creating new chef servers."
+  desc "Create and write a knife configuration suitable for creating new chef servers."
   task :build_knife_config do
-    KnifeSupport.build_knife_config
+    KnifeSupport.singleton.build_knife_config
     Rake::Task["bootstrap:knife"].invoke
   end
 

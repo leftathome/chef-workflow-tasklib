@@ -8,7 +8,7 @@ namespace :chef do
     puts "knife:"
     mute = %w[knife_config_template]
     KnifeSupport::DEFAULTS.keys.reject { |x| mute.include?(x.to_s) }.each do |key|
-      puts "\t#{key}: #{KnifeSupport.send(key)}"
+      puts "\t#{key}: #{KnifeSupport.singleton.send(key)}"
     end
 
     puts "vagrant:"

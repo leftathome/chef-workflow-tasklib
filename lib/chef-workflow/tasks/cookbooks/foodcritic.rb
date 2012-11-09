@@ -1,11 +1,14 @@
 require 'chef-workflow/knife-support'
 
+KnifeSupport.add_attribute :fc_cookbooks_path, File.join(Dir.pwd, 'cookbooks')
+KnifeSupport.add_attribute :fc_options, [ ]
+
 namespace :cookbooks do
-  desc "Run the cookbooks in #{KnifeSupport.fc_cookbooks_path} through foodcritic"
+  desc "Run the cookbooks through foodcritic"
   task :foodcritic do
     Rake::Task["cookbooks:resolve"].invoke rescue nil
     Bundler.with_clean_env do
-      sh "foodcritic #{KnifeSupport.fc_cookbooks_path} #{KnifeSupport.fc_options.join(" ")}"
+      sh "foodcritic #{KnifeSupport.singleton.fc_cookbooks_path} #{KnifeSupport.singleton.fc_options.join(" ")}"
     end
   end
 end

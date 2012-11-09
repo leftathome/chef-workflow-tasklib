@@ -18,8 +18,8 @@ namespace :chef do
 
     desc "Clean up the temporary chef configuration for chef-workflow"
     task :knife do
-      FileUtils.rm_rf(KnifeSupport.chef_config_path)
-      FileUtils.rm_f(KnifeSupport.knife_config_path)
+      FileUtils.rm_rf(KnifeSupport.singleton.chef_config_path)
+      FileUtils.rm_f(KnifeSupport.singleton.knife_config_path)
     end
   end
 
