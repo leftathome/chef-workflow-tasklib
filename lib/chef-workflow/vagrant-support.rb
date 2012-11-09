@@ -1,7 +1,18 @@
 require 'fileutils'
 class VagrantSupport
-  def initialize(prison_dir=File.join(Dir.pwd, '.prisons'))
+
+  attr_accessor :prison_dir
+  attr_reader :box_url
+  attr_reader :box
+
+  def initialize(prison_dir=File.join(Dir.pwd, '.prisons'), box_url="http://files.vagrantup.com/precise64.box")
+    self.box_url = box_url
     @prison_dir = prison_dir
+  end
+
+  def box_url=(url)
+    @box_url = url
+    @box = File.basename(url).gsub('\.box', '')
   end
 
   def create_prison_dir
@@ -33,6 +44,7 @@ class VagrantSupport
   def remove_prison(prison_file)
     FileUtils.rm_f(qualify_prison_file(prison_file))
   end
+
 end
 
 $vagrant_support ||= VagrantSupport.new

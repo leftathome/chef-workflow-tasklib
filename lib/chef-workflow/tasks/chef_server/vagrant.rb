@@ -27,7 +27,8 @@ namespace :chef_server do
       chef_server_ip = $ip_assignment.get_role_ips("chef-server").first
       prison = vagrant_prison(:auto_destroy => false) do
                  configure do |config|
-                   config.vm.box = "ubuntu"
+                   config.vm.box_url = $vagrant_support.box_url
+                   config.vm.box = $vagrant_support.box
                    config.vm.define :test_chef_server, :primary => true do |this_config|
                      this_config.vm.network :hostonly, chef_server_ip
                    end

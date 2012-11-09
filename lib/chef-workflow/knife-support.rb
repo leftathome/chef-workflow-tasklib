@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'erb'
 
 class KnifeSupport
   CHEF_CONFIG_PATH  = File.join(Dir.pwd, '.chef')
