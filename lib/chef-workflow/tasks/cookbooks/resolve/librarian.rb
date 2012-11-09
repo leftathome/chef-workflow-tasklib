@@ -1,11 +1,4 @@
-begin
-  Rake::Task["cookbooks:resolve"].clear
-  Rake::Task["cookbooks:update"].clear
-rescue
-end
-
-require 'chef-workflow/tasks/bootstrap/knife'
-require 'chef-workflow/tasks/cookbooks/resolve_and_upload'
+load File.join(File.dirname(__FILE__), 'bootstrap.rb')
 
 # Both berkshelf and librarian have ... aggressive dependencies. They usually are
 # a great way to break your Gemfile if you have chef in it.
