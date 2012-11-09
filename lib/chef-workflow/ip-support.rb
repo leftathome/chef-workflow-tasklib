@@ -7,9 +7,10 @@ ENV["TEST_CHEF_SUBNET"] ||= "10.10.10.0"
 class IPSupport < DelegateClass(Hash)
   attr_writer :subnet
 
-  def initialize(subnet=ENV["TEST_CHEF_SUBNET"])
+  def initialize(subnet=ENV["TEST_CHEF_SUBNET"], ip_file=File.join(Dir.pwd, '.chef-workflow', 'ips'))
     @subnet = subnet
-    @ip_assignment = Hash.new { |h,k| h[k] = [] }
+    reset
+    @ip_file = ip_file
     super(@ip_assignment)
   end
 
@@ -18,6 +19,27 @@ class IPSupport < DelegateClass(Hash)
       @subnet = ip
     end
     @subnet
+  end
+
+  def ip_file(filename=nil)
+    if filename
+      @ip_file = filename
+    end
+    @ip_file
+  end
+
+  def reset
+    @ip_assignment = { }
+  end
+
+  def load
+    if File.exist?(ip_file)
+      @ip_assignment = Marshal.load(File.binread(ip_file))
+    end
+  end
+
+  def write
+    File.binwrite(ip_file, Marshal.dump(@ip_assignment))
   end
 
   def unused_ip
@@ -35,11 +57,12 @@ class IPSupport < DelegateClass(Hash)
   end
 
   def assign_role_ip(role, ip)
+    @ip_assignment[role] ||= []
     @ip_assignment[role].push(ip)
   end
 
   def get_role_ips(role)
-    @ip_assignment[role]
+    @ip_assignment[role] || []
   end
 
   def seed_vagrant_ips
@@ -54,3 +77,8 @@ class IPSupport < DelegateClass(Hash)
 end
 
 IPSupport.configure
+IPSupport.singleton.load
+
+at_exit do
+  IPSupport.singleton.write
+end
