@@ -20,7 +20,7 @@ namespace :cookbook do
   desc "Update your locked cookbooks with Berkshelf"
   task :update => [ "bootstrap:knife" ] do
     Bundler.with_clean_env do
-      sh "berks update"
+      sh "berks update -c #{$knife_support.knife_config_path}"
     end
   end
 end
