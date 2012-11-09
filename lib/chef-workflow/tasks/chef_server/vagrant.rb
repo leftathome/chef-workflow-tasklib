@@ -6,12 +6,10 @@ require 'chef-workflow/knife-support'
 require 'chef-workflow/vagrant-support'
 
 namespace :chef_server do
-  desc "Create and write a knife configuration to #{$knife_support.options[:knife_config_path]} suitable for creating new chef servers."
+  desc "Create and write a knife configuration to #{$knife_support.knife_config_path} suitable for creating new chef servers."
   task :build_knife_config do
     $knife_support.build_knife_config
-
-    # this is what knife-dsl needs to know what config to use
-    ENV["CHEF_CONFIG"] = $knife_support.options[:knife_config_path]
+    Rake::Task["bootstrap:knife"].invoke
   end
 
   namespace :create do
@@ -38,7 +36,7 @@ namespace :chef_server do
       $vagrant_support.write_prison('chef-server', prison)
       result = knife %W[server bootstrap standalone --ssh-user vagrant --node-name test-chef-server --host #{chef_server_ip} -P vagrant]
 
-      fail if result > 0
+      fail if result != 0
     end
   end
 
