@@ -37,24 +37,27 @@ def seed_vagrant_ips
   end
 end
 
+CHEF_CONFIG_PATH = File.join(Dir.pwd, '.chef')
+
 # FIXME make this a temporary path later
-KNIFE_CONFIG_PATH = File.join(Dir.pwd, 'knife.rb')
+KNIFE_CONFIG_PATH = File.join(CHEF_CONFIG_PATH, 'knife.rb')
 
 KNIFE_CONFIG_TEMPLATE = <<-EOF
 log_level                :info
 log_location             STDOUT
 node_name                'test-user'
-client_key               File.join(File.dirname(__FILE__), 'admin.pem')
+client_key               File.join('<%= CHEF_CONFIG_PATH %>', 'admin.pem')
 validation_client_name   'chef-validator'
-validation_key           File.join(File.dirname(__FILE__), 'validation.pem')
+validation_key           File.join('<%= CHEF_CONFIG_PATH %>', 'validation.pem')
 chef_server_url          'https://<%= get_role_ips("chef-server").first %>:443'
 cache_type               'BasicFile'
 EOF
 
 CHEF_SERVER_PRISON_FILE = File.join(Dir.pwd, '.prisons', 'chef-server')
 
-def build_knife_config(path=KNIFE_CONFIG_PATH)
-  File.binwrite(path, ERB.new(KNIFE_CONFIG_TEMPLATE).result(binding))
+def build_knife_config
+  FileUtils.mkdir_p(CHEF_CONFIG_PATH)
+  File.binwrite(KNIFE_CONFIG_PATH, ERB.new(KNIFE_CONFIG_TEMPLATE).result(binding))
 end
 
 namespace :chef_server do
