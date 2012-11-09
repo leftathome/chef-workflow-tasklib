@@ -1,5 +1,4 @@
 require 'knife/dsl'
-require 'chef-workflow/knife-support'
 require 'chef-workflow/tasks/bootstrap/knife'
 
 namespace :cookbook do
