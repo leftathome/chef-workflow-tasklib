@@ -50,9 +50,11 @@ class IPSupport < DelegateClass(Hash)
   end
 
   class << self
+    attr_reader :singleton
+
     def configure(&block)
-      $ip_assignment ||= IPSupport.new
-      $ip_assignment.instance_eval(&block) if block
+      @singleton ||= IPSupport.new
+      @singleton.instance_eval(&block) if block
     end
   end
 end

@@ -10,7 +10,7 @@ task :show_config do
   end
 
   puts "vagrant:"
-  puts "\tip subnet (/24): #{$ip_assignment.subnet}"
+  puts "\tip subnet (/24): #{IPSupport.singleton.subnet}"
   puts "\tprison dir: #{$vagrant_support.prison_dir}"
   puts "\tbox url: #{$vagrant_support.box_url}"
 end

@@ -16,13 +16,13 @@ namespace :chef_server do
 
   namespace :create do
     task :allocate_vagrant_ip do
-      $ip_assignment.seed_vagrant_ips
-      $ip_assignment.assign_role_ip("chef-server", $ip_assignment.unused_ip) 
+      IPSupport.singleton.seed_vagrant_ips
+      IPSupport.singleton.assign_role_ip("chef-server", IPSupport.singleton.unused_ip) 
     end
 
     desc "Create a chef server in a vagrant machine."
     task :vagrant => [ "chef_server:create:allocate_vagrant_ip", "chef_server:build_knife_config" ] do
-      chef_server_ip = $ip_assignment.get_role_ips("chef-server").first
+      chef_server_ip = IPSupport.singleton.get_role_ips("chef-server").first
       prison = vagrant_prison(:auto_destroy => false) do
                  configure do |config|
                    config.vm.box_url = $vagrant_support.box_url
