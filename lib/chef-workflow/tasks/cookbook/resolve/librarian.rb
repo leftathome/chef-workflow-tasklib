@@ -10,10 +10,10 @@ require 'chef-workflow/tasks/cookbook/resolve_and_upload'
 # Both berkshelf and librarian have ... aggressive dependencies. They usually are
 # a great way to break your Gemfile if you have chef in it.
 namespace :cookbook do
-  desc "Resolve cookbooks and populate #{$knife_support.cookbooks_path} using Librarian"
+  desc "Resolve cookbooks and populate #{KnifeSupport.cookbooks_path} using Librarian"
   task :resolve => [ "bootstrap:knife" ] do
     Bundler.with_clean_env do
-      sh "librarian-chef install --path #{$knife_support.cookbooks_path} -c #{$knife_support.knife_config_path}"
+      sh "librarian-chef install --path #{KnifeSupport.cookbooks_path} -c #{KnifeSupport.knife_config_path}"
     end
   end
 

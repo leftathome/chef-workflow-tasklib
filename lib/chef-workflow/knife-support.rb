@@ -1,5 +1,6 @@
 require 'fileutils'
 require 'erb'
+require 'forwardable'
 
 class KnifeSupport
   DEFAULTS = {
@@ -14,17 +15,26 @@ class KnifeSupport
   log_level                :info
   log_location             STDOUT
   node_name                'test-user'
-  client_key               File.join('<%= $knife_support.chef_config_path %>', 'admin.pem')
+  client_key               File.join('<%= KnifeSupport.chef_config_path %>', 'admin.pem')
   validation_client_name   'chef-validator'
-  validation_key           File.join('<%= $knife_support.chef_config_path %>', 'validation.pem')
+  validation_key           File.join('<%= KnifeSupport.chef_config_path %>', 'validation.pem')
   chef_server_url          'https://<%= $ip_assignment.get_role_ips("chef-server").first %>:443'
   cache_type               'BasicFile'
-  cache_options( :path => File.join('<%= $knife_support.chef_config_path %>', 'checksums' ))
-  cookbook_path            [ '<%= $knife_support.cookbooks_path %>' ]
+  cache_options( :path => File.join('<%= KnifeSupport.chef_config_path %>', 'checksums' ))
+  cookbook_path            [ '<%= KnifeSupport.cookbooks_path %>' ]
   EOF
 
   DEFAULTS.each_key do |key|
-    attr_accessor key
+    attr_writer key
+    class_eval <<-EOF
+      def #{key}(arg=nil)
+        if arg
+          @#{key} = arg
+        end
+
+        @#{key}
+      end
+    EOF
   end
 
   def initialize(options={})
@@ -40,6 +50,17 @@ class KnifeSupport
     FileUtils.mkdir_p(chef_config_path)
     File.binwrite(knife_config_path, ERB.new(knife_config_template).result(binding))
   end
+
+  class << self
+    extend Forwardable
+    attr_accessor :singleton
+    def_delegators :@singleton, :build_knife_config, *DEFAULTS.keys
+
+    def configure(&block)
+      self.singleton ||= KnifeSupport.new
+      self.singleton.instance_eval(&block) if block
+    end
+  end
 end
 
-$knife_support ||= KnifeSupport.new
+KnifeSupport.configure
