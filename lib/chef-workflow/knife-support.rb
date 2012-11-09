@@ -5,8 +5,8 @@ require 'forwardable'
 class KnifeSupport
   DEFAULTS = {
     :cookbooks_path         => File.join(Dir.pwd, 'cookbooks'),
-    :chef_config_path       => File.join(Dir.pwd, '.chef'),
-    :knife_config_path      => File.join(Dir.pwd, '.chef', 'knife.rb'),
+    :chef_config_path       => File.join(Dir.pwd, '.chef-workflow', 'chef'),
+    :knife_config_path      => File.join(Dir.pwd, '.chef-workflow', 'chef', 'knife.rb'),
     :roles_path             => File.join(Dir.pwd, 'roles'),
     :environments_path      => File.join(Dir.pwd, 'environments')
   }

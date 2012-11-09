@@ -4,7 +4,7 @@ class VagrantSupport
   attr_accessor :prison_dir
   attr_reader :box
 
-  def initialize(prison_dir=File.join(Dir.pwd, '.prisons'), box_url="http://files.vagrantup.com/precise64.box")
+  def initialize(prison_dir=File.join(Dir.pwd, '.chef-workflow', 'prisons'), box_url="http://files.vagrantup.com/precise64.box")
     self.box_url = box_url
     @prison_dir = prison_dir
   end
