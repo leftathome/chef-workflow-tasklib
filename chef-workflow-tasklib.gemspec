@@ -17,7 +17,8 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_dependency 'knife-dsl', '~> 0.0.1'
-  gem.add_dependency 'vagrant-dsl', '~> 0.0.1'
+  gem.add_dependency 'knife-dsl', '~> 0.0.2'
+  gem.add_dependency 'vagrant-dsl', '~> 0.0.6'
   gem.add_dependency 'rake', '~> 0.9'
+  gem.add_dependency 'knife-server'
 end
