@@ -6,6 +6,8 @@ require 'chef-workflow/generic-support'
 class KnifeSupport
   DEFAULTS = {
     :cookbooks_path         => File.join(Dir.pwd, 'cookbooks'),
+    :fc_cookbooks_path      => File.join(Dir.pwd, 'cookbooks'),
+    :fc_options             => [ ],
     :chef_config_path       => File.join(Dir.pwd, '.chef-workflow', 'chef'),
     :knife_config_path      => File.join(Dir.pwd, '.chef-workflow', 'chef', 'knife.rb'),
     :roles_path             => File.join(Dir.pwd, 'roles'),
