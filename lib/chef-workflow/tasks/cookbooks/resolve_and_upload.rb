@@ -1,6 +1,6 @@
-require 'chef-workflow/tasks/cookbook/upload'
+require 'chef-workflow/tasks/cookbooks/upload'
 
-namespace :cookbook do
+namespace :cookbooks do
   desc "Run the cookbook resolver and upload the result to the chef server."
-  task :resolve_and_upload => [ "cookbook:resolve", "cookbook:upload" ] 
+  task :resolve_and_upload => [ "cookbooks:resolve", "cookbooks:upload" ] 
 end
