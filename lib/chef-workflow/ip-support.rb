@@ -20,7 +20,7 @@ class IPSupport < DelegateClass(Hash)
   end
 
   def unused_ip
-    ip = ENV["TEST_CHEF_SUBNET"].dup.next
+    ip = @subnet.next
 
     while ip_used?(ip)
       ip.next!
