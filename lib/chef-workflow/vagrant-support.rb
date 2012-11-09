@@ -63,9 +63,11 @@ class VagrantSupport
   end
 
   class << self
+    attr_reader :singleton
+
     def configure(&block)
-      $vagrant_support ||= VagrantSupport.new
-      $vagrant_support.instance_eval(&block) if block
+      @singleton ||= VagrantSupport.new
+      @singleton.instance_eval(&block) if block
     end
   end
 end

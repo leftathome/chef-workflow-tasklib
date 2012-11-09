@@ -25,8 +25,8 @@ namespace :chef_server do
       chef_server_ip = IPSupport.singleton.get_role_ips("chef-server").first
       prison = vagrant_prison(:auto_destroy => false) do
                  configure do |config|
-                   config.vm.box_url = $vagrant_support.box_url
-                   config.vm.box = $vagrant_support.box
+                   config.vm.box_url = VagrantSupport.singleton.box_url
+                   config.vm.box = VagrantSupport.singleton.box
                    config.vm.define :test_chef_server, :primary => true do |this_config|
                      this_config.vm.network :hostonly, chef_server_ip
                    end
@@ -35,7 +35,7 @@ namespace :chef_server do
                  vagrant_up
                end
 
-      $vagrant_support.write_prison('chef-server', prison)
+      VagrantSupport.singleton.write_prison('chef-server', prison)
       result = knife %W[server bootstrap standalone --ssh-user vagrant --node-name test-chef-server --host #{chef_server_ip} -P vagrant]
 
       fail if result != 0
@@ -45,7 +45,7 @@ namespace :chef_server do
   namespace :destroy do
     desc "Destroy the last chef server created with vagrant"
     task :vagrant do
-      $vagrant_support.destroy_prison('chef-server')
+      VagrantSupport.singleton.destroy_prison('chef-server')
     end
   end
 end
