@@ -1,5 +1,5 @@
 require 'chef-workflow/tasks/chef_server/vagrant'
 require 'chef-workflow/tasks/cookbooks/upload'
-require 'chef-workflow/tasks/roles'
-require 'chef-workflow/tasks/environments'
-require 'chef-workflow/tasks/show_config'
+require 'chef-workflow/tasks/chef/roles'
+require 'chef-workflow/tasks/chef/environments'
+require 'chef-workflow/tasks/chef/show_config'
