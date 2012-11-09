@@ -45,12 +45,7 @@ namespace :chef_server do
   namespace :destroy do
     desc "Destroy the last chef server created with vagrant"
     task :vagrant do
-      prison_dir, prison_env_opts = $vagrant_support.read_prison('chef-server')
-
-      if prison_dir and prison_env_opts
-        Vagrant::Prison.cleanup(prison_dir, Vagrant::Environment.new(prison_env_opts))
-        $vagrant_support.remove_prison('chef-server')
-      end
+      $vagrant_support.destroy_prison('chef-server')
     end
   end
 end

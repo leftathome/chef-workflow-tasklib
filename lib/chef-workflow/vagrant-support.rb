@@ -23,7 +23,6 @@ class VagrantSupport
     File.join(@prison_dir, prison_file)
   end
 
-  # TODO make Vagrant::Prison easier to recreate without rebuilding the Vagrantfile
   def write_prison(prison_file, prison)
     create_prison_dir
     File.binwrite(
@@ -45,6 +44,16 @@ class VagrantSupport
     FileUtils.rm_f(qualify_prison_file(prison_file))
   end
 
+  def destroy_prison(prison_file)
+    prison_dir, prison_env_opts = read_prison(prison_file)
+
+    if prison_dir and prison_env_opts
+      prison = Vagrant::Prison.new(prison_dir)
+      prison.configure_environment(prison_env_opts)
+      prison.cleanup
+      remove_prison(prison_file)
+    end
+  end
 end
 
 $vagrant_support ||= VagrantSupport.new
