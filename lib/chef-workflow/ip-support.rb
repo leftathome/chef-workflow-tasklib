@@ -4,10 +4,19 @@ require 'delegate'
 ENV["TEST_CHEF_SUBNET"] ||= "10.10.10.0"
 
 class IPSupport < DelegateClass(Hash)
+  attr_writer :subnet
+
   def initialize(subnet=ENV["TEST_CHEF_SUBNET"])
     @subnet = subnet
     @ip_assignment = Hash.new { |h,k| h[k] = [] }
     super(@ip_assignment)
+  end
+
+  def subnet(ip=nil)
+    if ip
+      @subnet = ip
+    end
+    @subnet
   end
 
   def unused_ip
@@ -39,6 +48,13 @@ class IPSupport < DelegateClass(Hash)
       assign_role_ip("vagrant-reserved", dot_one_ip)
     end
   end
+
+  class << self
+    def configure(&block)
+      $ip_assignment ||= IPSupport.new
+      $ip_assignment.instance_eval(&block) if block
+    end
+  end
 end
 
-$ip_assignment ||= IPSupport.new
+IPSupport.configure
