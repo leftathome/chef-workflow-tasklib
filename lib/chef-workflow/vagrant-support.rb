@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'chef-workflow/generic-support'
 
 class VagrantSupport
   attr_accessor :prison_dir
@@ -62,14 +63,7 @@ class VagrantSupport
     end
   end
 
-  class << self
-    attr_reader :singleton
-
-    def configure(&block)
-      @singleton ||= VagrantSupport.new
-      @singleton.instance_eval(&block) if block
-    end
-  end
+  include GenericSupport
 end
 
 VagrantSupport.configure

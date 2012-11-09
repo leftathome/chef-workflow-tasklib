@@ -1,6 +1,7 @@
 require 'fileutils'
 require 'erb'
 require 'forwardable'
+require 'chef-workflow/generic-support'
 
 class KnifeSupport
   DEFAULTS = {
@@ -51,15 +52,11 @@ class KnifeSupport
     File.binwrite(knife_config_path, ERB.new(knife_config_template).result(binding))
   end
 
+  include GenericSupport
+
   class << self
     extend Forwardable
-    attr_accessor :singleton
     def_delegators :@singleton, :build_knife_config, *DEFAULTS.keys
-
-    def configure(&block)
-      self.singleton ||= KnifeSupport.new
-      self.singleton.instance_eval(&block) if block
-    end
   end
 end
 

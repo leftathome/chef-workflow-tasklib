@@ -1,5 +1,6 @@
 require 'vagrant/dsl'
 require 'delegate'
+require 'chef-workflow/generic-support'
 
 ENV["TEST_CHEF_SUBNET"] ||= "10.10.10.0"
 
@@ -49,14 +50,7 @@ class IPSupport < DelegateClass(Hash)
     end
   end
 
-  class << self
-    attr_reader :singleton
-
-    def configure(&block)
-      @singleton ||= IPSupport.new
-      @singleton.instance_eval(&block) if block
-    end
-  end
+  include GenericSupport
 end
 
 IPSupport.configure
