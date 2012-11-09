@@ -1,7 +1,5 @@
 require 'knife/dsl'
 require 'vagrant/dsl'
-require 'erb'
-require 'fileutils'
 
 require 'chef-workflow/ip-support'
 require 'chef-workflow/knife-support'
