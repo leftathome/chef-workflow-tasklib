@@ -20,7 +20,7 @@ class KnifeSupport
   client_key               File.join('<%= KnifeSupport.singleton.chef_config_path %>', 'admin.pem')
   validation_client_name   'chef-validator'
   validation_key           File.join('<%= KnifeSupport.singleton.chef_config_path %>', 'validation.pem')
-  chef_server_url          'https://<%= IPSupport.singleton.get_role_ips("chef-server").first %>:443'
+  chef_server_url          'http://<%= IPSupport.singleton.get_role_ips("chef-server").first %>:4000'
   cache_type               'BasicFile'
   cache_options( :path => File.join('<%= KnifeSupport.singleton.chef_config_path %>', 'checksums' ))
   cookbook_path            [ '<%= KnifeSupport.singleton.cookbooks_path %>' ]
