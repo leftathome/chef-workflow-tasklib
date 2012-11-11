@@ -1,6 +1,7 @@
 require 'vagrant/dsl'
 require 'delegate'
 require 'chef-workflow/generic-support'
+require 'fileutils'
 
 ENV["TEST_CHEF_SUBNET"] ||= "10.10.10.0"
 
@@ -39,14 +40,22 @@ class IPSupport < DelegateClass(Hash)
   end
 
   def write
+    FileUtils.mkdir_p(File.dirname(ip_file))
     File.binwrite(ip_file, Marshal.dump(@ip_assignment))
   end
 
+  def next_ip(arg)
+    octets = arg.split(/\./, 4).map(&:to_i)
+    octets[3] += 1
+    raise "out of ips!" if octets[3] > 255
+    return octets.map(&:to_s).join(".")
+  end
+
   def unused_ip
-    ip = @subnet.next
+    ip = next_ip(@subnet)
 
     while ip_used?(ip)
-      ip.next!
+      ip = next_ip(ip)
     end
 
     return ip
