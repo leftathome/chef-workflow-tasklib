@@ -10,7 +10,8 @@ class KnifeSupport
     :chef_config_path       => File.join(Dir.pwd, '.chef-workflow', 'chef'),
     :knife_config_path      => File.join(Dir.pwd, '.chef-workflow', 'chef', 'knife.rb'),
     :roles_path             => File.join(Dir.pwd, 'roles'),
-    :environments_path      => File.join(Dir.pwd, 'environments')
+    :environments_path      => File.join(Dir.pwd, 'environments'),
+    :test_environment       => "vagrant"
   }
 
   DEFAULTS[:knife_config_template] = <<-EOF
@@ -31,19 +32,39 @@ class KnifeSupport
 
     DEFAULTS[attr_name] = default # a little inelegant, but it works.
 
-    str = <<-EOF
-      def #{attr_name}=(arg)
-        @#{attr_name} = arg
-      end
+    # HACK: no good way to hook this right now, revisit later.
+    str = ""
+    if attr_name.to_s == "knife_config_path"
+      str = <<-EOF
+        def #{attr_name}=(arg)
+          @#{attr_name} = arg
+          ENV["CHEF_CONFIG"] = arg
+        end
 
-      def #{attr_name}(arg=nil)
-        if arg
+        def #{attr_name}(arg=nil)
+          if arg
+            @#{attr_name} = arg
+            ENV["CHEF_CONFIG"] = arg
+          end
+          
+          @#{attr_name}
+        end
+      EOF
+    else
+      str = <<-EOF
+        def #{attr_name}=(arg)
           @#{attr_name} = arg
         end
-        
-        @#{attr_name}
-      end
-    EOF
+
+        def #{attr_name}(arg=nil)
+          if arg
+            @#{attr_name} = arg
+          end
+          
+          @#{attr_name}
+        end
+      EOF
+    end
 
     KnifeSupport.singleton.instance_eval str
     KnifeSupport.singleton.send(attr_name, default)

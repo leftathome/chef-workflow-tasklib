@@ -37,6 +37,8 @@ class VagrantSupport
       qualify_prison_file(prison_file),
       Marshal.dump([prison.dir, prison.env_opts])
     )
+
+    prison.name = prison_file
   end
 
   def read_prison(prison_file)
