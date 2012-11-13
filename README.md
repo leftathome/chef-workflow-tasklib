@@ -101,6 +101,14 @@ The next few sections will briefly cover the high-level design of the system.
 For details, hit the
 [wiki](https://github.com/hoteltonight/chef-workflow-tasklib/wiki).
 
+For the basic workflow, note that everything is state tracked between runs for
+the most part, so if you build a chef server with `chef_server:create:vagrant`,
+other tasks will just do the right thing and operate on that chef server. This
+makes it easy to maintain a edit, upload, test, evaluate, repeat workflow as
+you're working on changes. Knife configuration, vagrant "prisons" (See the
+wiki) and allocated IPs are all tracked on exit in the `.chef-workflow`
+directory.
+
 ## Picking your own workflow
 
 Adding `require` statements to your workflow is the easiest way to get started.
@@ -136,7 +144,7 @@ For example let's say we just want to add:
   * uploading cookbooks
   * uploading roles
   * uploading environments
-  * a task that does all of these when we type `rake`
+  * a task that does all of these when we type `bundle exec rake`
 
 *You'll have to point this at your live chef configurations* (see the next
 section), but your `Rakefile` would at first look something like this:
@@ -153,6 +161,65 @@ task :default => %w[
   chef:environments:upload
 ]
 ```
+
+Adding new rake tasks (or even full task libs) is easy too with the extensible
+configuration system and scaffolding already in place, and utility libraries to
+take the drama out of calling knife plugins or working with collections of
+machines. Please see the
+[wiki](https://github.com/hoteltonight/chef-workflow-tasklib/wiki) for more
+information.
+
+## Configuring the workflow
+
+So we have all these pre-baked tasks, but we need this little thing tweaked so
+we can get on with our lives. Maybe it's where the `.chef-workflow` directory
+lives or where to work with your cookbooks or what vagrant box to use, or whatever.
+
+The `KnifeSupport` and `VagrantSupport` have tooling to assist you with this.
+
+```ruby
+require 'chef-workflow'
+
+VagrantSupport.configure do
+  # Use this `box_url` for all vagrant machines. Note that this is actually the default
+  box_url "http://files.vagrantup.com/precise64.box"
+end
+
+KnifeSupport.configure do
+  roles_path "our-roles" # set the roles directory for chef:roles:upload
+end
+```
+
+For our custom workflow example above, we can twiddle a few bits on
+`KnifeSupport` to point at known chef configuration locations.
+
+You can just drop it in your `Rakefile`, or you can throw it in a separate
+required library so things like
+[chef-workflow-testlib](https://github.com/hoteltonight/chef-workflow-testlib)
+can use its settings as well.
+
+Tasks can also dynamically supply their own `KnifeSupport` configuration bits.
+Our `foodcritic` plugin defines several methods to differentiate the cookbook
+directory checked from the one that's to be uploaded/resolved to. This is nice
+if you keep your "in-house" cookbooks in a separate spot.
+
+```ruby
+require 'chef-workflow/tasks/cookbooks/foodcritic'
+
+KnifeSupport.configure do
+  fc_cookbooks_path 'site-cookbooks' # run foodcritic against 'site-cookbooks' instead of 'cookbooks'
+end
+```
+
+## What's next?
+
+  * EC2 support (also in testlib)
+  * Better support for remote test runs ala `minitest-chef-handler`
+  * Guard support for test runs
+
+## Problems
+
+  * It's slow. EC2 support should help tremendously with this.
 
 ## Contributing
 
