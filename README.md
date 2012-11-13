@@ -141,6 +141,9 @@ So to add `berkshelf` support, we add this to our Rakefile:
 require 'chef-workflow/tasks/cookbooks/resolve/berkshelf'
 ```
 
+(If you are using berkshelf 0.4.x or earlier, `require
+'chef-workflow/tasks/cookbooks/resolve/berkshelf0.4'`)
+
 Which will add a few tasks, `cookbooks:resolve` and `cookbooks:update` and a
 few dependencies. **Note:** due to the way many of these tools declare
 dependencies, they must be installed independently of the bundle with `gem
