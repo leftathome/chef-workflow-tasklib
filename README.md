@@ -176,9 +176,11 @@ information.
 
 ## Configuring the workflow
 
-So we have all these pre-baked tasks, but we need this little thing tweaked so
-we can get on with our lives. Maybe it's where the `.chef-workflow` directory
-lives or where to work with your cookbooks or what vagrant box to use, or whatever.
+chef-workflow provides you with a number of pre-baked tasks, but say you need
+just one little tweak so you get with your life.  Maybe it's where the
+`.chef-workflow` directory lives or where to work with your cookbooks or what
+vagrant box to use, or whatever. You shouldn't have to rewrite the entire task
+to change that.
 
 The `KnifeSupport` and `VagrantSupport` have tooling to assist you with this.
 
