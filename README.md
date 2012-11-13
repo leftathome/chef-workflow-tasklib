@@ -222,6 +222,8 @@ information on how to manipulate this for your own tasks.
 ## Problems
 
   * It's slow. EC2 support should help tremendously with this.
+  * It's noisy. Some tooling has been built to deal with this, but it hasn't
+    been integrated yet.
 
 ## Contributing
 
