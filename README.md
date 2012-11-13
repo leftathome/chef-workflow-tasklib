@@ -209,6 +209,10 @@ KnifeSupport.configure do
 end
 ```
 
+Please see the
+[wiki](https://github.com/hoteltonight/chef-workflow-tasklib/wiki) for more
+information on how to manipulate this for your own tasks.
+
 ## What's next?
 
   * EC2 support (also in testlib)
