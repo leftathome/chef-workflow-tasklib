@@ -40,7 +40,7 @@ Then to see all the tasks use:
 
 **Note:** `rake` by itself will **not work**. We depend on newer gems than the
 `rake` that's included with ruby does, which is what will be used if you do not
-execute `bundle exec rake`. At this point bundler runs, it will fail because
+execute `bundle exec rake`. At this point bundler runs, and will fail because
 `rake` will have activated gems that your bundle will be incompatible with.
 
 You should see something similar to this:
@@ -98,7 +98,7 @@ cherry-picking tasks with `require` into your `Rakefile` and configuring them
 with support configurators like `KnifeSupport` and `VagrantSupport`.
 
 The next few sections will briefly cover the high-level design of the system.
-For details, hit the
+For details, or information on writing your own tasks, hit the
 [wiki](https://github.com/hoteltonight/chef-workflow-tasklib/wiki).
 
 For the basic workflow, note that everything is state tracked between runs for
@@ -114,7 +114,7 @@ directory.
 Adding `require` statements to your workflow is the easiest way to get started.
 We don't expect you to use a resolver, for example, but support both
 [Berkshelf](https://github.com/RiotGames/Berkshelf) and
-[librarian](https://github.com/applicationsonline/librarian) out of the box.
+[Librarian](https://github.com/applicationsonline/librarian) out of the box.
 None of these are required in the default `chef-workflow` require.
 
 Many tasks exist in our [tasks
@@ -135,10 +135,7 @@ few dependencies. **Note:** due to the way many of these tools declare
 dependencies, they must be installed independently of the bundle with `gem
 install`. This is out of our control.
 
-Anyhow, to rebuild our workflow in `chef-workflow`, we can just require several
-tasks to pull the whole thing in.
-
-For example let's say we just want to add:
+Let's build a custom workflow. For example let's say we just want to add:
 
   * resolving cookbooks with librarian
   * uploading cookbooks
@@ -199,9 +196,10 @@ required library so things like
 can use its settings as well.
 
 Tasks can also dynamically supply their own `KnifeSupport` configuration bits.
-Our `foodcritic` plugin defines several methods to differentiate the cookbook
+Our `foodcritic` plugin supplies a setting to differentiate the cookbook
 directory checked from the one that's to be uploaded/resolved to. This is nice
-if you keep your "in-house" cookbooks in a separate spot.
+if you keep your "in-house" cookbooks in a separate spot from your full corpus
+of cookbooks, and don't care if the third party cookbooks pass a lint check.
 
 ```ruby
 require 'chef-workflow/tasks/cookbooks/foodcritic'
