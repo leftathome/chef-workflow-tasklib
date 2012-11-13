@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["erik+github@hollensbe.org"]
   gem.description   = %q{A set of rake tasks provided as discrete libraries for forming a chef workflow}
   gem.summary       = %q{A set of rake tasks provided as discrete libraries for forming a chef workflow}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/hoteltonight/chef-workflow-tasklib"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
