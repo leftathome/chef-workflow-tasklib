@@ -143,7 +143,7 @@ Let's build a custom workflow. For example let's say we just want to add:
   * uploading environments
   * a task that does all of these when we type `bundle exec rake`
 
-*You'll have to point this at your live chef configurations* (see the next
+*You'll have to point this at your live knife configuration* (see the next
 section), but your `Rakefile` would at first look something like this:
 
 ```ruby
