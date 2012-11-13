@@ -141,7 +141,7 @@ require 'chef-workflow/tasks/cookbooks/resolve/berkshelf'
 Which will add a few tasks, `cookbooks:resolve` and `cookbooks:update` and a
 few dependencies. **Note:** due to the way many of these tools declare
 dependencies, they must be installed independently of the bundle with `gem
-install`. This is out of our control.
+install`, so in this case, `gem install berkshelf`. This is out of our control.
 
 Let's build a custom workflow. For example let's say we just want to add:
 
