@@ -4,10 +4,10 @@ This gem provides a set of rake tasks broken up logically to support a chef
 workflow, and tooling to assist with driving those tasks.
 
 This suite of tools is an attempt to build a pragmatic workflow -- one that
-does not assume how we work will be the "best" or only way to work. As a result
-every attempt has been made to remain as flexible as possible to allow you to
-take the parts you like, throw out what you don't, create what you want from
-primitives, and customize what you want to keep.
+does not assume how we, the authors work will be the "best" or only way to
+work. As a result every attempt has been made to remain as flexible as possible
+to allow you to take the parts you like, throw out what you don't, create what
+you want from primitives, and customize what you want to keep.
 
 We also provide a suite of test helpers that work with these tasks to instrument: 
 
@@ -49,6 +49,9 @@ Then to see all the tasks use:
 `rake` that's included with ruby does, which is what will be used if you do not
 execute `bundle exec rake`. At this point bundler runs, and will fail because
 `rake` will have activated gems that your bundle will be incompatible with.
+
+If this is confusing, just remember to always `bundle exec rake` and you won't
+have any trouble.
 
 You should see something similar to this:
 
