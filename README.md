@@ -9,15 +9,22 @@ every attempt has been made to remain as flexible as possible to allow you to
 take the parts you like, throw out what you don't, create what you want from
 primitives, and customize what you want to keep.
 
-We also provide a workflow-aware suite of test helpers to drive asserting the
-state of a chef server, external requirements, full-stack testing, and
-converging nodes in dynamically provisioned environment. Please see [Chef
-Workflow - Test Support](https://github.com/hoteltonight/chef-workflow-testlib)
-for more information on this sister project.
+We also provide a suite of test helpers that work with these tasks to instrument: 
+
+  * asserting the state of a chef server
+  * asserting external requirements of a network (availability)
+  * full-stack testing (does the rails app talk to the database)
+  * converging nodes in a dynamically provisioned environment
+  
+Please see [Chef Workflow - Test
+Support](https://github.com/hoteltonight/chef-workflow-testlib) for more
+information on this sister project.
 
 ## Installation
 
-Many of the design considerations behind chef-workflow depend on bundler.
+Many of the choices made designing chef-workflow assume bundler is in use. We
+do not recommend installing the gem directly, but through a `Gemfile` that
+lives in your repository.
 
 Add this line to your application's Gemfile:
 
@@ -93,9 +100,10 @@ of a few things:
 
 ## Usage
 
-Everything is driven through usage of `rake`, with an emphasis on
-cherry-picking tasks with `require` into your `Rakefile` and configuring them
-with support configurators like `KnifeSupport` and `VagrantSupport`.
+Everything in this workflow is managed through usage of `rake` tasks, with an
+emphasis on cherry-picking tasks with `require` into your `Rakefile` and
+configuring them with support configurators like `KnifeSupport` and
+`VagrantSupport`.
 
 The next few sections will briefly cover the high-level design of the system.
 For details, or information on writing your own tasks, hit the
