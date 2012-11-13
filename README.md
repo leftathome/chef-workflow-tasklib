@@ -74,7 +74,7 @@ rake test:refresh                    # Refresh all global meta on the chef serve
 rake test:vagrant:full               # Build a chef server with vagrant, run test:build, destroy the chef server
 ```
 
-Last step: add `.chef-workflow` to `.gitignore`. You can configure this, but
+Last step: add `.chef-workflow` to `.gitignore`. You can change this, but
 until you've done that, it's going to write things to this directory.
 
 If you want to do a full test run at this point (which with no tests will do
@@ -130,7 +130,7 @@ None of these are required in the default `chef-workflow` require.
 
 Many tasks exist in our [tasks
 directory](https://github.com/hoteltonight/chef-workflow-tasklib/tree/master/lib/chef-workflow/tasks)
-and I strongly recommend poking through it if you're interested in fully
+and we strongly recommend poking through it if you're interested in fully
 customizing your workflow. Every attempt has been made for each task library to
 pull in everything it needs to operate which allows you to use each independent
 portion without fear of missing essential code.
@@ -180,7 +180,7 @@ information.
 ## Configuring the workflow
 
 chef-workflow provides you with a number of pre-baked tasks, but say you need
-just one little tweak so you get with your life.  Maybe it's where the
+just one little tweak so you can get with your life.  Maybe it's where the
 `.chef-workflow` directory lives or where to work with your cookbooks or what
 vagrant box to use, or whatever. You shouldn't have to rewrite the entire task
 to change that.
@@ -200,11 +200,12 @@ KnifeSupport.configure do
 end
 ```
 
-For our custom workflow example above, we can twiddle a few bits on
-`KnifeSupport` to point at known chef configuration locations.
+For our custom workflow example above, you can twiddle a few bits on
+`KnifeSupport` to point at known chef configuration locations, which can use
+`~/.chef/knife.rb`, for example.
 
-You can just drop it in your `Rakefile`, or you can throw it in a separate
-required library so things like
+As for these customizations, you can just drop it in your `Rakefile`, or you
+can throw it in a separate required library so things like
 [chef-workflow-testlib](https://github.com/hoteltonight/chef-workflow-testlib)
 can use its settings as well.
 
