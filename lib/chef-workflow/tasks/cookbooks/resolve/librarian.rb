@@ -5,8 +5,10 @@ load File.join(File.dirname(__FILE__), 'bootstrap.rb')
 namespace :cookbooks do
   desc "Resolve cookbooks and populate using Librarian"
   task :resolve => [ "bootstrap:knife" ] do
-    Bundler.with_clean_env do
-      sh "librarian-chef install --path #{KnifeSupport.singleton.cookbooks_path}"
+    if File.directory?(KnifeSupport.singleton.cookbooks_path)
+      Bundler.with_clean_env do
+        sh "librarian-chef install --path #{KnifeSupport.singleton.cookbooks_path}"
+      end
     end
   end
 
