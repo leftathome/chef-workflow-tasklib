@@ -1,12 +1,12 @@
 require 'chef-workflow'
 
-require 'chef-workflow/tasks/chef_server/vagrant'
-require 'chef-workflow/tasks/cookbooks/upload'
-require 'chef-workflow/tasks/chef/roles'
-require 'chef-workflow/tasks/chef/environments'
-require 'chef-workflow/tasks/chef/show_config'
-require 'chef-workflow/tasks/chef/clean'
-require 'chef-workflow/tasks/test/vagrant'
+chef_workflow-task 'chef_server/vagrant'
+chef_workflow-task 'cookbooks/upload'
+chef_workflow-task 'chef/roles'
+chef_workflow-task 'chef/environments'
+chef_workflow-task 'chef/show_config'
+chef_workflow-task 'chef/clean'
+chef_workflow-task 'test/vagrant'
 
 class Chef
   module Workflow
