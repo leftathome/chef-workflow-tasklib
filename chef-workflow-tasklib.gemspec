@@ -17,6 +17,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
+  gem.add_dependency 'chef-workflow'
   gem.add_dependency 'knife-dsl', '~> 0.0.2'
   gem.add_dependency 'vagrant-dsl', '~> 0.0.6'
   gem.add_dependency 'vagrant-prison', '~> 0.0.4'

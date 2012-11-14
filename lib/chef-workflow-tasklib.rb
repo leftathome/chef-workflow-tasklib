@@ -1,3 +1,5 @@
+require 'chef-workflow'
+
 require 'chef-workflow/tasks/chef_server/vagrant'
 require 'chef-workflow/tasks/cookbooks/upload'
 require 'chef-workflow/tasks/chef/roles'
