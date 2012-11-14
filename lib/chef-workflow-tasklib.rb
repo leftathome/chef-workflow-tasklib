@@ -1,13 +1,5 @@
 require 'chef-workflow'
 
-chef_workflow-task 'chef_server/vagrant'
-chef_workflow-task 'cookbooks/upload'
-chef_workflow-task 'chef/roles'
-chef_workflow-task 'chef/environments'
-chef_workflow-task 'chef/show_config'
-chef_workflow-task 'chef/clean'
-chef_workflow-task 'test/vagrant'
-
 class Chef
   module Workflow
     module TaskHelper
@@ -27,3 +19,11 @@ if defined? Rake::DSL
     include Chef::Workflow::TaskHelper
   end
 end
+
+chef_workflow_task 'chef_server/vagrant'
+chef_workflow_task 'cookbooks/upload'
+chef_workflow_task 'chef/roles'
+chef_workflow_task 'chef/environments'
+chef_workflow_task 'chef/show_config'
+chef_workflow_task 'chef/clean'
+chef_workflow_task 'test/vagrant'
