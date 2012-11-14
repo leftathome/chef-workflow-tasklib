@@ -104,9 +104,9 @@ of a few things:
 ## Usage
 
 Everything in this workflow is managed through usage of `rake` tasks, with an
-emphasis on cherry-picking tasks with `require` into your `Rakefile` and
-configuring them with support configurators like `KnifeSupport` and
-`VagrantSupport`.
+emphasis on cherry-picking tasks with `chef_workflow_task` into your `Rakefile` and
+configuring them with support configurators like `configure_knife` and
+`configure_vagrant`.
 
 The next few sections will briefly cover the high-level design of the system.
 For details, or information on writing your own tasks, hit the
@@ -122,7 +122,7 @@ directory.
 
 ## Picking your own workflow
 
-Adding `require` statements to your workflow is the easiest way to get started.
+Adding `chef_workflow_task` statements to your workflow is the easiest way to get started.
 We don't expect you to use a resolver, for example, but support both
 [Berkshelf](https://github.com/RiotGames/Berkshelf) and
 [Librarian](https://github.com/applicationsonline/librarian) out of the box.
@@ -138,11 +138,11 @@ portion without fear of missing essential code.
 So to add `berkshelf` support, we add this to our Rakefile:
 
 ```ruby
-require 'chef-workflow/tasks/cookbooks/resolve/berkshelf'
+chef_workflow_task 'cookbooks/resolve/berkshelf'
 ```
 
-(If you are using berkshelf 0.4.x or earlier, `require
-'chef-workflow/tasks/cookbooks/resolve/berkshelf0.4'`)
+(If you are using berkshelf 0.4.x or earlier, `chef_workflow_task
+'cookbooks/resolve/berkshelf0.4'`)
 
 Which will add a few tasks, `cookbooks:resolve` and `cookbooks:update` and a
 few dependencies. **Note:** due to the way many of these tools declare
@@ -161,10 +161,10 @@ Let's build a custom workflow. For example let's say we just want to add:
 section), but your `Rakefile` would at first look something like this:
 
 ```ruby
-require 'chef-workflow/tasks/cookbooks/resolve/librarian'
-require 'chef-workflow/tasks/cookbooks/upload'
-require 'chef-workflow/tasks/chef/roles'
-require 'chef-workflow/tasks/chef/environments'
+chef_workflow_task 'cookbooks/resolve/librarian'
+chef_workflow_task 'cookbooks/upload'
+chef_workflow_task 'chef/roles'
+chef_workflow_task 'chef/environments'
 
 task :default => %w[
   cookbooks:resolve_and_upload
@@ -188,23 +188,24 @@ just one little tweak so you can get with your life.  Maybe it's where the
 vagrant box to use, or whatever. You shouldn't have to rewrite the entire task
 to change that.
 
-The `KnifeSupport` and `VagrantSupport` have tooling to assist you with this.
+The `configure_knife` and `configure_vagrant` commands have tooling to assist
+you with this.
 
 ```ruby
 require 'chef-workflow'
 
-VagrantSupport.configure do
+configure_vagrant do
   # Use this `box_url` for all vagrant machines. Note that this is actually the default
   box_url "http://files.vagrantup.com/precise64.box"
 end
 
-KnifeSupport.configure do
+configure_knife do
   roles_path "our-roles" # set the roles directory for chef:roles:upload
 end
 ```
 
-For our custom workflow example above, you can twiddle a few bits on
-`KnifeSupport` to point at known chef configuration locations, which can use
+For our custom workflow example above, you can twiddle a few bits with 
+`configure_knife` to point at known chef configuration locations, which can use
 `~/.chef/knife.rb`, for example.
 
 As for these customizations, you can just drop it in your `Rakefile`, or you
@@ -212,16 +213,16 @@ can throw it in a separate required library so things like
 [chef-workflow-testlib](https://github.com/hoteltonight/chef-workflow-testlib)
 can use its settings as well.
 
-Tasks can also dynamically supply their own `KnifeSupport` configuration bits.
+Tasks can also dynamically supply their own `configure_knife` configuration bits.
 Our `foodcritic` plugin supplies a setting to differentiate the cookbook
 directory checked from the one that's to be uploaded/resolved to. This is nice
 if you keep your "in-house" cookbooks in a separate spot from your full corpus
 of cookbooks, and don't care if the third party cookbooks pass a lint check.
 
 ```ruby
-require 'chef-workflow/tasks/cookbooks/foodcritic'
+chef_workflow_task 'cookbooks/foodcritic'
 
-KnifeSupport.configure do
+configure_knife do
   fc_cookbooks_path 'site-cookbooks' # run foodcritic against 'site-cookbooks' instead of 'cookbooks'
 end
 ```
