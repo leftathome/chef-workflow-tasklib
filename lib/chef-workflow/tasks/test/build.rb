@@ -16,7 +16,8 @@ namespace :test do
     "test:resolve_hack",
     "cookbooks:upload",
     "chef:roles:upload",
-    "chef:environments:upload"
+    "chef:environments:upload",
+    "chef:data_bags:upload"
   ]
 
   desc "test:refresh and test"

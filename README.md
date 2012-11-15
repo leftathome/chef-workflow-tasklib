@@ -155,6 +155,7 @@ Let's build a custom workflow. For example let's say we just want to add:
   * uploading cookbooks
   * uploading roles
   * uploading environments
+  * uploading data bags
   * a task that does all of these when we type `bundle exec rake`
 
 *You'll have to point this at your live knife configuration* (see the next
@@ -165,11 +166,13 @@ chef_workflow_task 'cookbooks/resolve/librarian'
 chef_workflow_task 'cookbooks/upload'
 chef_workflow_task 'chef/roles'
 chef_workflow_task 'chef/environments'
+chef_workflow_task 'chef/data_bags'
 
 task :default => %w[
   cookbooks:resolve_and_upload
   chef:roles:upload
   chef:environments:upload
+  chef:data_bags:upload
 ]
 ```
 
