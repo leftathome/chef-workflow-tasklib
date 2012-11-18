@@ -1,6 +1,6 @@
-require 'chef-workflow/ip-support'
-require 'chef-workflow/knife-support'
-require 'chef-workflow/vagrant-support'
+require 'chef-workflow/support/ip'
+require 'chef-workflow/support/knife'
+require 'chef-workflow/support/vagrant'
 
 namespace :chef do
   desc "Show the calculated configuration for chef-workflow"

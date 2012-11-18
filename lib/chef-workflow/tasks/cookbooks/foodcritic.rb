@@ -1,4 +1,4 @@
-require 'chef-workflow/knife-support'
+require 'chef-workflow/support/knife'
 
 KnifeSupport.add_attribute :fc_cookbooks_path, File.join(Dir.pwd, 'cookbooks')
 KnifeSupport.add_attribute :fc_options, [ ]

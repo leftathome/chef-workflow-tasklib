@@ -1,4 +1,4 @@
-require 'chef-workflow/knife-support'
+require 'chef-workflow/support/knife'
 
 namespace :bootstrap do
   task :knife do
