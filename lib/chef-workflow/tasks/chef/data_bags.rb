@@ -6,7 +6,9 @@ namespace :chef do
     desc "Upload your data bags to the chef server"
     task :upload => [ "bootstrap:knife" ] do
       if File.directory?(KnifeSupport.singleton.data_bags_path)
-        # bag names: basename of data_bags/*. This presumes your data bags path is structured like so:
+        # bag names: basename of data_bags/*. This presumes your data bags path
+        # is structured like so:
+        #
         # data_bags/my_bag # bag name
         # data_bags/my_bag/my_item.(rb|json) # bag item
         #
