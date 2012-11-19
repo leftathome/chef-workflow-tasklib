@@ -50,3 +50,10 @@ namespace :chef_server do
     end
   end
 end
+
+# hooking for chef:clean
+namespace :chef do
+  namespace :clean do
+    task :server => ["chef_server:destroy:vagrant"]
+  end
+end
