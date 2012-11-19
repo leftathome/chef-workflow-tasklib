@@ -35,7 +35,7 @@ namespace :chef_server do
                  vagrant_up
                end
 
-      VagrantSupport.singleton.write_prison('chef-server', prison)
+      File.binwrite(GeneralSupport.singleton.chef_server_prison, Marshal.dump(prison))
       result = knife %W[server bootstrap standalone --ssh-user vagrant --node-name test-chef-server --host #{chef_server_ip} -P vagrant]
 
       fail if result != 0
@@ -45,7 +45,8 @@ namespace :chef_server do
   namespace :destroy do
     desc "Destroy the last chef server created with vagrant"
     task :vagrant do
-      VagrantSupport.singleton.destroy_prison('chef-server')
+      prison = Marshal.load(File.binread(GeneralSupport.singleton.chef_server_prison))
+      prison.cleanup
     end
   end
 end
