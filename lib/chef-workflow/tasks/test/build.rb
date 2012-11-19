@@ -14,10 +14,7 @@ namespace :test do
   desc "Refresh all global meta on the chef server"
   task :refresh => [
     "test:resolve_hack",
-    "cookbooks:upload",
-    "chef:roles:upload",
-    "chef:environments:upload",
-    "chef:data_bags:upload"
+    "chef:upload"
   ]
 
   desc "test:refresh and test"
