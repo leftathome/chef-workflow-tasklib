@@ -47,6 +47,7 @@ namespace :chef_server do
     task :vagrant do
       prison = Marshal.load(File.binread(GeneralSupport.singleton.chef_server_prison))
       prison.cleanup
+      IPSupport.singleton.delete_role('chef-server')
     end
   end
 end
