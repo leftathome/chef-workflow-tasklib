@@ -18,6 +18,7 @@ namespace :chef_server do
     task :allocate_vagrant_ip do
       IPSupport.singleton.seed_vagrant_ips
       IPSupport.singleton.assign_role_ip("chef-server", IPSupport.singleton.unused_ip) 
+      IPSupport.singleton.write
     end
 
     desc "Create a chef server in a vagrant machine."
@@ -48,6 +49,7 @@ namespace :chef_server do
       prison = Marshal.load(File.binread(GeneralSupport.singleton.chef_server_prison))
       prison.cleanup
       IPSupport.singleton.delete_role('chef-server')
+      IPSupport.singleton.write
     end
   end
 end
