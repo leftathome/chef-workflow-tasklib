@@ -216,6 +216,9 @@ can throw it in a separate required library so things like
 [chef-workflow-testlib](https://github.com/hoteltonight/chef-workflow-testlib)
 can use its settings as well.
 
+`bundle exec rake chef:show_config` can show you most of the settings in a
+system and how you've configured them.
+
 Tasks can also dynamically supply their own `configure_knife` configuration bits.
 Our `foodcritic` plugin supplies a setting to differentiate the cookbook
 directory checked from the one that's to be uploaded/resolved to. This is nice
