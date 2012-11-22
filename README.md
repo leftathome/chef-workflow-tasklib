@@ -120,6 +120,11 @@ you're working on changes. Knife configuration, vagrant "prisons" (See the
 wiki) and allocated IPs are all tracked on exit in the `.chef-workflow`
 directory.
 
+There are some environment variables which control various settings, like
+debugging output. The defaults are usually fine, but check out the "Environment
+Variables" section of the
+[chef-workflow](https://github.com/hoteltonight/chef-workflow) `README.md`.
+
 ## Picking your own workflow
 
 Adding `chef_workflow_task` statements to your workflow is the easiest way to get started.
