@@ -29,7 +29,7 @@ namespace :chef do
     end
   end
 
-  desc "Clean up the entire chef-workflow directory"
+  desc "Clean up the entire chef-workflow directory and machines"
   task :clean => [ "chef:clean:machines" ] do
     Rake::Task["chef:clean:server"].invoke rescue nil
     FileUtils.rm_rf(GeneralSupport.singleton.workflow_dir)

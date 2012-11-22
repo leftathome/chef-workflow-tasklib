@@ -20,7 +20,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'chef-workflow'
   gem.add_dependency 'knife-dsl', '~> 0.0.2'
   gem.add_dependency 'vagrant-dsl', '~> 0.0.6'
-  gem.add_dependency 'vagrant-prison', '~> 0.0.4'
   gem.add_dependency 'rake', '~> 0.9'
   gem.add_dependency 'knife-server'
 end
