@@ -1,24 +1,30 @@
 # Chef Workflow - Rake Tasks & Support
 
 This gem provides a set of rake tasks broken up logically to support a chef
-workflow, and tooling to assist with driving those tasks.
+workflow, and tooling to assist with driving those tasks. It is intended to
+complement a chef repository by directly being added as a dependency.
 
-This suite of tools is an attempt to build a pragmatic workflow -- one that
-does not assume how we, the authors work will be the "best" or only way to
-work. As a result every attempt has been made to remain as flexible as possible
-to allow you to take the parts you like, throw out what you don't, create what
-you want from primitives, and customize what you want to keep.
+Some of the tasks it provides are:
 
-We also provide a suite of test helpers that work with these tasks to instrument: 
+* Uploading your cookbooks, roles, environments and databags with the defaults
+  expecting a layout similar to the [opscode example
+  chef-repo](https://github.com/opscode/chef-repo)
+* Resolving your cookbook's dependencies, with tools like
+  [librarian](https://github.com/applicationsonline/librarian) or
+  [berkshelf](https://github.com/RiotGames/berkshelf) 
+* Lint your cookbooks with [foodcritic](https://github.com/acrmp/foodcritic) 
+* Creating a chef server for testing in a single command
+* Running unit tests against networks of provisioned machines -- see
+  [chef-workflow-tasklib](https://github.com/hoteltonight/chef-workflow-testlib)
+  for more information.
 
-  * asserting the state of a chef server
-  * asserting external requirements of a network (availability)
-  * full-stack testing (does the rails app talk to the database)
-  * converging nodes in a dynamically provisioned environment
-  
-Please see [Chef Workflow - Test
-Support](https://github.com/hoteltonight/chef-workflow-testlib) for more
-information on this sister project.
+## We do a lot, but we don't tell you how to do it.
+
+The defaults (which you can set up by following the installation instructions)
+use our workflow and a standard chef repository layout. **You don't have to do
+this.** Write your own tasks, use a subset of our tasks, configure our tasks to
+use your settings, or even adjust what happens when you just type `rake`. The
+whole system is built to accomodate this.
 
 ## Installation
 
