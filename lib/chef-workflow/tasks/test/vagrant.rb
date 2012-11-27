@@ -8,8 +8,7 @@ namespace :test do
     task :full => [ 
       "chef_server:create:vagrant", 
       "test:build",
-      "chef_server:destroy:vagrant",
-      "chef:clean"
+      "chef:clean" # this actually tears down the chef server
     ]
   end
 end
