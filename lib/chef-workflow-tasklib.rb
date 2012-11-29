@@ -19,10 +19,3 @@ if defined? Rake::DSL
     include Chef::Workflow::TaskHelper
   end
 end
-
-chef_workflow_task 'chef_server/vagrant'
-chef_workflow_task 'cookbooks/upload'
-chef_workflow_task 'chef/upload'
-chef_workflow_task 'chef/show_config'
-chef_workflow_task 'chef/clean'
-chef_workflow_task 'test/vagrant'

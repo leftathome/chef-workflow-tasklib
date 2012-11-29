@@ -45,6 +45,7 @@ To get started, create a Rakefile and include the base set of tasks (the
 
 ```ruby
 require 'chef-workflow-tasklib'
+chef_workflow_task 'default'
 ```
 
 Then to see all the tasks use:
