@@ -40,8 +40,13 @@ And then execute:
 
     $ bundle
 
-To get started, create a Rakefile and include the base set of tasks (the
-'default' workflow)
+To get started, run the `chef-workflow-bootstrap` utility which will create
+some files in your repo. It will not overwrite anything.
+
+    $ bundle exec chef-workflow-bootstrap
+
+If you already had a `Rakefile`, it will not be modified. To use the tasks, add
+these two lines to your `Rakefile`:
 
 ```ruby
 require 'chef-workflow-tasklib'
@@ -204,11 +209,13 @@ vagrant box to use, or whatever. You shouldn't have to rewrite the entire task
 to change that.
 
 The `configure_knife` and `configure_vagrant` commands have tooling to assist
-you with this.
+you with this. If you ran the `chef-workflow-bootstrap` tool, you should have a
+file called `lib/chef-workflow-config.rb` which is used to store configuration
+in a central place between this and our testing system.
+
+Code like this goes in this file:
 
 ```ruby
-require 'chef-workflow'
-
 configure_vagrant do
   # Use this `box_url` for all vagrant machines. Note that this is actually the default
   box_url "http://files.vagrantup.com/precise64.box"
@@ -223,27 +230,8 @@ For our custom workflow example above, you can twiddle a few bits with
 `configure_knife` to point at known chef configuration locations, which can use
 `~/.chef/knife.rb`, for example.
 
-As for these customizations, you can just drop it in your `Rakefile`, or you
-can throw it in a separate required library so things like
-[chef-workflow-testlib](https://github.com/hoteltonight/chef-workflow-testlib)
-can use its settings as well.
-
 `bundle exec rake chef:show_config` can show you most of the settings in a
 system and how you've configured them.
-
-Tasks can also dynamically supply their own `configure_knife` configuration bits.
-Our `foodcritic` plugin supplies a setting to differentiate the cookbook
-directory checked from the one that's to be uploaded/resolved to. This is nice
-if you keep your "in-house" cookbooks in a separate spot from your full corpus
-of cookbooks, and don't care if the third party cookbooks pass a lint check.
-
-```ruby
-chef_workflow_task 'cookbooks/foodcritic'
-
-configure_knife do
-  fc_cookbooks_path 'site-cookbooks' # run foodcritic against 'site-cookbooks' instead of 'cookbooks'
-end
-```
 
 Please see the
 [wiki](https://github.com/hoteltonight/chef-workflow-tasklib/wiki) for more
