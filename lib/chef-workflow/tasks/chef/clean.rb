@@ -24,6 +24,7 @@ namespace :chef do
     task :machines do
       Chef::Config.from_file(KnifeSupport.singleton.knife_config_path)
       s = Scheduler.new(false)
+      s.force_deprovision true
       s.teardown
       s.write_state
     end
