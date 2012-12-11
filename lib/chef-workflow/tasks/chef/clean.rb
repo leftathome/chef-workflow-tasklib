@@ -22,11 +22,13 @@ namespace :chef do
 
     desc "Clean up the machines that a previous chef-workflow run generated"
     task :machines do
-      Chef::Config.from_file(KnifeSupport.singleton.knife_config_path)
-      s = Scheduler.new(false)
-      s.serial = true
-      s.force_deprovision = true
-      s.teardown(%w[chef-server])
+      if File.exist?(KnifeSupport.singleton.knife_config_path)
+        Chef::Config.from_file(KnifeSupport.singleton.knife_config_path)
+        s = Scheduler.new(false)
+        s.serial = true
+        s.force_deprovision = true
+        s.teardown(%w[chef-server])
+      end
     end
   end
 
