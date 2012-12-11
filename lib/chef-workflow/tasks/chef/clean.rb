@@ -24,15 +24,14 @@ namespace :chef do
     task :machines do
       Chef::Config.from_file(KnifeSupport.singleton.knife_config_path)
       s = Scheduler.new(false)
-      s.force_deprovision true
-      s.teardown
-      s.write_state
+      s.serial = true
+      s.force_deprovision = true
+      s.teardown(%w[chef-server])
     end
   end
 
   desc "Clean up the entire chef-workflow directory and machines"
-  task :clean => [ "chef:clean:machines" ] do
-    Rake::Task["chef:clean:server"].invoke rescue nil
+  task :clean => [ "chef:clean:machines", "chef_server:destroy" ] do
     FileUtils.rm_rf(GeneralSupport.singleton.workflow_dir)
   end
 end

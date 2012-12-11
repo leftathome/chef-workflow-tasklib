@@ -27,4 +27,11 @@ namespace :test do
     "chef:clean:machines",
     "test:build"
   ]
+
+  desc "Build a chef server, run test:build, destroy the chef server"
+  task :full => [
+    "chef_server:create",
+    "test:build",
+    "chef:clean"
+  ]
 end
