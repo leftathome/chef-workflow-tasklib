@@ -1,6 +1,7 @@
 require 'chef-workflow/support/general'
 require 'chef-workflow/support/ip'
 require 'chef-workflow/support/vagrant'
+require 'chef-workflow/support/ec2'
 require 'chef-workflow/support/knife'
 require 'chef-workflow/support/scheduler'
 require 'chef/config'
@@ -28,6 +29,7 @@ namespace :chef do
         s.serial = true
         s.force_deprovision = true
         s.teardown(%w[chef-server])
+        s.write_state
       end
     end
   end

@@ -11,7 +11,7 @@ namespace :chef_server do
     KnifeSupport.singleton.build_knife_config
     Chef::Config.from_file(KnifeSupport.singleton.knife_config_path)
 
-    s = Scheduler.new(true)
+    s = Scheduler.new(false)
     s.serial = true
 
     s.schedule_provision(
