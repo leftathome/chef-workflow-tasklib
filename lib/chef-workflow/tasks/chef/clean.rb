@@ -36,6 +36,7 @@ namespace :chef do
 
   desc "Clean up the entire chef-workflow directory and machines"
   task :clean => [ "chef:clean:machines", "chef_server:destroy" ] do
+    EC2Support.singleton.destroy_security_group
     FileUtils.rm_rf(GeneralSupport.singleton.workflow_dir)
   end
 end
