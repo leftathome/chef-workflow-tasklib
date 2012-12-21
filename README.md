@@ -15,7 +15,7 @@ Some of the tasks it provides are:
 * Lint your cookbooks with [foodcritic](https://github.com/acrmp/foodcritic) 
 * Creating a chef server for testing in a single command
 * Running unit tests against networks of provisioned machines -- see
-  [chef-workflow-tasklib](https://github.com/chef-workflow/chef-workflow-testlib)
+  [chef-workflow-testlib](https://github.com/chef-workflow/chef-workflow-testlib)
   for more information.
 
 ## We do a lot, but we don't tell you how to do it.
