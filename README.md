@@ -15,7 +15,7 @@ Some of the tasks it provides are:
 * Lint your cookbooks with [foodcritic](https://github.com/acrmp/foodcritic) 
 * Creating a chef server for testing in a single command
 * Running unit tests against networks of provisioned machines -- see
-  [chef-workflow-tasklib](https://github.com/hoteltonight/chef-workflow-testlib)
+  [chef-workflow-tasklib](https://github.com/chef-workflow/chef-workflow-testlib)
   for more information.
 
 ## We do a lot, but we don't tell you how to do it.
@@ -105,7 +105,7 @@ of a few things:
   versions. This has some implications:
 
     * Tools like `berkshelf` and `librarian` and `foodcritic` (all add-ins to
-      the normal workflow) have hard dependencies on earlier versions of chef.
+      the default workflow) have hard dependencies on earlier versions of chef.
       The tasks that integrate these take this into account, but **you must
       install the gems separately and manually to use them**.
 
@@ -122,10 +122,10 @@ configuring them with support configurators like `configure_knife` and
 
 The next few sections will briefly cover the high-level design of the system.
 For details, or information on writing your own tasks, hit the
-[wiki](https://github.com/hoteltonight/chef-workflow-tasklib/wiki).
+[wiki](https://github.com/chef-workflow/chef-workflow-tasklib/wiki).
 
 For the basic workflow, note that everything is state tracked between runs for
-the most part, so if you build a chef server with `chef_server:create:vagrant`,
+the most part, so if you build a chef server with `chef_server:create`,
 other tasks will just do the right thing and operate on that chef server. This
 makes it easy to maintain a edit, upload, test, evaluate, repeat workflow as
 you're working on changes. Knife configuration, vagrant "prisons" (See the
@@ -135,7 +135,7 @@ directory.
 There are some environment variables which control various settings, like
 debugging output. The defaults are usually fine, but check out the "Environment
 Variables" section of the
-[chef-workflow](https://github.com/hoteltonight/chef-workflow) `README.md`.
+[chef-workflow](https://github.com/chef-workflow/chef-workflow) `README.md`.
 
 ## Picking your own workflow
 
@@ -143,13 +143,13 @@ Adding `chef_workflow_task` statements to your workflow is the easiest way to ge
 We don't expect you to use a resolver, for example, but support both
 [Berkshelf](https://github.com/RiotGames/Berkshelf) and
 [Librarian](https://github.com/applicationsonline/librarian) out of the box.
-None of these are required in the default `chef-workflow` require.
+Neither of these are required in the default `chef-workflow` require.
 
 Many tasks exist in our [tasks
-directory](https://github.com/hoteltonight/chef-workflow-tasklib/tree/master/lib/chef-workflow/tasks)
+directory](https://github.com/chef-workflow/chef-workflow-tasklib/tree/master/lib/chef-workflow/tasks)
 and we strongly recommend poking through it if you're interested in fully
 customizing your workflow. Every attempt has been made for each task library to
-pull in everything it needs to operate which allows you to use each independent
+pull in only what it needs to operate which allows you to use each independent
 portion without fear of missing essential code.
 
 So to add `berkshelf` support, we add this to our Rakefile:
@@ -197,7 +197,7 @@ Adding new rake tasks (or even full task libs) is easy too with the extensible
 configuration system and scaffolding already in place, and utility libraries to
 take the drama out of calling knife plugins or working with collections of
 machines. Please see the
-[wiki](https://github.com/hoteltonight/chef-workflow-tasklib/wiki) for more
+[wiki](https://github.com/chef-workflow/chef-workflow-tasklib/wiki) for more
 information.
 
 ## Configuring the workflow
@@ -217,7 +217,7 @@ Code like this goes in this file:
 
 ```ruby
 configure_vagrant do
-  # Use this `box_url` for all vagrant machines. Note that this is actually the default
+  # Use this `box_url` for all vagrant machines.
   box_url "http://files.vagrantup.com/precise64.box"
 end
 
@@ -228,26 +228,28 @@ end
 
 For our custom workflow example above, you can twiddle a few bits with 
 `configure_knife` to point at known chef configuration locations, which can use
-`~/.chef/knife.rb`, for example.
+`~/.chef/knife.rb`, for example. You will want to be careful doing this with
+test integration.
 
 `bundle exec rake chef:show_config` can show you most of the settings in a
 system and how you've configured them.
 
 Please see the
-[wiki](https://github.com/hoteltonight/chef-workflow-tasklib/wiki) for more
+[wiki](https://github.com/chef-workflow/chef-workflow-tasklib/wiki) for more
 information on how to manipulate this for your own tasks.
 
 ## What's next?
 
-  * EC2 support (also in testlib)
-  * Better support for remote test runs ala `minitest-chef-handler`
-  * Guard support for test runs
+  * Guard support for change-triggered test runs.
+  * Feedback that's more reactive than "everything" or "nothing". The speed (or
+    lack thereof) of running large suites makes this especially tricky.
+  * See the Issues list for more.
 
 ## Problems
 
-  * It's slow. EC2 support should help tremendously with this.
-  * It's noisy. Some tooling has been built to deal with this, but it hasn't
-    been integrated yet.
+  * It's not fast. EC2 support is faster than Vagrant for most complex cases,
+    but it's still pretty slow.
+  * It has two effective noise levels: "a lot" and "silent".
 
 ## Contributing
 
