@@ -1,10 +1,4 @@
-require 'chef-workflow/support/general'
-require 'chef-workflow/support/ip'
-require 'chef-workflow/support/vagrant'
-require 'chef-workflow/support/ec2'
-require 'chef-workflow/support/knife'
-require 'chef-workflow/support/scheduler'
-require 'chef/config'
+require 'chef-workflow/task-helpers/with_scheduler'
 require 'fileutils'
 
 namespace :chef do
@@ -23,13 +17,10 @@ namespace :chef do
 
     desc "Clean up the machines that a previous chef-workflow run generated"
     task :machines do
-      if File.exist?(KnifeSupport.singleton.knife_config_path)
-        Chef::Config.from_file(KnifeSupport.singleton.knife_config_path)
-        s = Scheduler.new(false)
+      with_scheduler do |s|
         s.serial = true
         s.force_deprovision = true
         s.teardown(%w[chef-server])
-        s.write_state
       end
     end
   end
