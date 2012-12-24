@@ -8,10 +8,10 @@ require 'chef/config'
 
 if defined? Rake::DSL
   module Rake::DSL 
-    def with_scheduler
+    def with_scheduler(auto_save=false)
       if File.exist?(KnifeSupport.singleton.knife_config_path)
         Chef::Config.from_file(KnifeSupport.singleton.knife_config_path)
-        s = Scheduler.new(false)
+        s = Scheduler.new(auto_save)
         yield s
         s.write_state
       end
