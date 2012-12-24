@@ -30,9 +30,10 @@ namespace :chef_server do
 
   desc "Destroy the chef server"
   task :destroy do
-    s = Scheduler.new(false)
-    s.serial = true
-    s.force_deprovision = true
-    s.teardown_group('chef-server')
+    with_scheduler do |s|
+      s.serial = true
+      s.force_deprovision = true
+      s.teardown_group('chef-server')
+    end
   end
 end
