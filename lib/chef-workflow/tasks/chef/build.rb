@@ -1,10 +1,5 @@
-require 'chef-workflow/support/general'
-require 'chef-workflow/support/ip'
-require 'chef-workflow/support/vagrant'
-require 'chef-workflow/support/ec2'
-require 'chef-workflow/support/knife'
-require 'chef-workflow/support/scheduler'
-require 'chef/config'
+require 'chef-workflow/task-helpers/with_scheduler'
+require 'chef-workflow/support/vm/helpers/knife'
 
 namespace :chef do
   desc "build and bootstrap a machine with a role in the run_list"
@@ -17,12 +12,8 @@ namespace :chef do
     number_of_machines = (args[:number_of_machines] || 1).to_i
 
     with_scheduler(true) do |s|
-      kp              = VM::KnifeProvisioner.new
-      kp.username     = KnifeSupport.singleton.ssh_user
-      kp.password     = KnifeSupport.singleton.ssh_password
-      kp.use_sudo     = KnifeSupport.singleton.use_sudo
-      kp.ssh_key      = KnifeSupport.singleton.ssh_identity_file
-      kp.environment  = KnifeSupport.singleton.test_environment
+      kp = build_knife_provisioner
+      kp.solr_check = false
 
       s.schedule_provision(
         role_name,
@@ -30,9 +21,9 @@ namespace :chef do
           GeneralSupport.singleton.machine_provisioner.new(
             role_name,
             number_of_machines
-      ),
-        kp
-      ],
+          ),
+          kp
+        ],
         []
       )
 
