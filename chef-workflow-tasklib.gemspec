@@ -21,5 +21,4 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'knife-dsl', '~> 0.1.0'
   gem.add_dependency 'vagrant-dsl', '~> 0.1.0'
   gem.add_dependency 'rake', '~> 0.9'
-  gem.add_dependency 'knife-server', '~> 0.3.2'
 end
