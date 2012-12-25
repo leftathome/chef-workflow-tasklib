@@ -36,6 +36,11 @@ Add this line to your application's Gemfile:
 
     gem 'chef-workflow-tasklib'
 
+**Note:** a recent release of the 'moneta' gem has broken most chef gems. If
+you have problems, add this to your Gemfile:
+
+    gem 'moneta', '~> 0.6.0'
+
 And then execute:
 
     $ bundle
