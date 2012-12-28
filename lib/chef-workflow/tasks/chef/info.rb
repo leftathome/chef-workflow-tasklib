@@ -24,9 +24,9 @@ namespace :chef do
 
     desc "Output some information about known IP allocations"
     task :ips do
-      IPSupport.singleton.roles.each do |role|
+      ChefWorkflow::IPSupport.singleton.roles.each do |role|
         puts "Group: #{role}"
-        IPSupport.singleton.get_role_ips(role).each do |ip|
+        ChefWorkflow::IPSupport.singleton.get_role_ips(role).each do |ip|
           puts "\t#{ip}"
         end
       end
@@ -35,20 +35,20 @@ namespace :chef do
     desc "Show the calculated configuration for chef-workflow"
     task :config do
       puts "general:"
-      puts "\tworkflow_dir: #{GeneralSupport.singleton.workflow_dir}"
-      puts "\tvm_file: #{GeneralSupport.singleton.vm_file}"
-      puts "\tchef_server_prison: #{GeneralSupport.singleton.chef_server_prison}"
-      puts "\tmachine_provisoner: #{GeneralSupport.singleton.machine_provisioner}"
+      puts "\tworkflow_dir: #{ChefWorkflow::GeneralSupport.singleton.workflow_dir}"
+      puts "\tvm_file: #{ChefWorkflow::GeneralSupport.singleton.vm_file}"
+      puts "\tchef_server_prison: #{ChefWorkflow::GeneralSupport.singleton.chef_server_prison}"
+      puts "\tmachine_provisoner: #{ChefWorkflow::GeneralSupport.singleton.machine_provisioner}"
 
       puts "knife:"
       mute = %w[knife_config_template]
-      KnifeSupport::DEFAULTS.keys.reject { |x| mute.include?(x.to_s) }.each do |key|
-        puts "\t#{key}: #{KnifeSupport.singleton.send(key)}"
+      ChefWorkflow::KnifeSupport::DEFAULTS.keys.reject { |x| mute.include?(x.to_s) }.each do |key|
+        puts "\t#{key}: #{ChefWorkflow::KnifeSupport.singleton.send(key)}"
       end
 
       puts "vagrant:"
-      puts "\tip subnet (/24): #{IPSupport.singleton.subnet}"
-      puts "\tbox url: #{VagrantSupport.singleton.box_url}"
+      puts "\tip subnet (/24): #{ChefWorkflow::IPSupport.singleton.subnet}"
+      puts "\tbox url: #{ChefWorkflow::VagrantSupport.singleton.box_url}"
 
       puts "ec2:"
 
@@ -60,7 +60,7 @@ namespace :chef do
         security_groups
         security_group_open_ports
       ].each do |key|
-          puts "\t#{key}: #{EC2Support.singleton.send(key)}"
+        puts "\t#{key}: #{ChefWorkflow::EC2Support.singleton.send(key)}"
       end
     end
   end

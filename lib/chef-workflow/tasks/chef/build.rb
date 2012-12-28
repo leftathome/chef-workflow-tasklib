@@ -18,7 +18,7 @@ namespace :chef do
       s.schedule_provision(
         role_name,
         [
-          GeneralSupport.singleton.machine_provisioner.new(
+          ChefWorkflow::GeneralSupport.singleton.machine_provisioner.new(
             role_name,
             number_of_machines
           ),
