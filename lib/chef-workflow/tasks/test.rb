@@ -16,7 +16,7 @@ namespace :test do
       s.run
 
       groups =
-        KnifeSupport.singleton.test_recipes.map do |recipe|
+        ChefWorkflow::KnifeSupport.singleton.test_recipes.map do |recipe|
           group_name = "recipe-#{recipe.gsub(/::/, '-')}"
 
           kp            = build_knife_provisioner
@@ -26,7 +26,7 @@ namespace :test do
           s.schedule_provision(
             group_name,
             [
-              GeneralSupport.singleton.machine_provisioner.new(group_name, 1),
+              ChefWorkflow::GeneralSupport.singleton.machine_provisioner.new(group_name, 1),
               kp
             ]
           )
