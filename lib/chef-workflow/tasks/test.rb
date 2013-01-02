@@ -45,7 +45,7 @@ namespace :test do
   namespace :recipes do
     desc "Cleanup any stale instances created running recipe tests."
     task :cleanup do
-      with_scheduler(true) do |s|
+      with_scheduler do |s|
         s.run
 
         s.vm_groups.select do |g, v|
