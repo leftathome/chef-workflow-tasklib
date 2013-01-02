@@ -11,11 +11,11 @@ namespace :chef_server do
     with_scheduler do |s|
       s.serial = true
       s.schedule_provision(
-      'chef-server', 
-      [
-        ChefWorkflow::GeneralSupport.singleton.machine_provisioner.new('chef-server', 1), 
-        ChefWorkflow::VM::ChefServerProvisioner.new
-      ],
+        'chef-server', 
+        [
+          ChefWorkflow::GeneralSupport.singleton.machine_provisioner.new('chef-server', 1), 
+          ChefWorkflow::VM::ChefServerProvisioner.new
+        ],
         []
       )
 
