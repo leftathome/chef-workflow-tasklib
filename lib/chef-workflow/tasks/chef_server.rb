@@ -3,6 +3,9 @@ require 'chef-workflow/task-helpers/with_scheduler'
 namespace :chef_server do
   desc "Create a chef server with the #{ChefWorkflow::GeneralSupport.singleton.machine_provisioner} provisioner"
   task :create do
+    chef_workflow_task 'bootstrap/db'
+    Rake::Task["bootstrap:db"].invoke
+
     # FIXME not really happy with having to repeat this at the end, but it's
     # necessary. maybe a subroutine in the right place in the future is the
     # best approach, but I'm feeling lazy right now.
