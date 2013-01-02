@@ -13,7 +13,6 @@ if defined? Rake::DSL
         Chef::Config.from_file(ChefWorkflow::KnifeSupport.singleton.knife_config_path)
         s = ChefWorkflow::Scheduler.new(auto_save)
         yield s
-        s.write_state
       end
     end
   end
