@@ -35,9 +35,9 @@ namespace :chef do
     desc "Show the calculated configuration for chef-workflow"
     task :config do
       puts "general:"
-      puts "\tworkflow_dir: #{ChefWorkflow::GeneralSupport.singleton.workflow_dir}"
-      puts "\tvm_file: #{ChefWorkflow::GeneralSupport.singleton.vm_file}"
-      puts "\tmachine_provisoner: #{ChefWorkflow::GeneralSupport.singleton.machine_provisioner}"
+      puts "\tworkflow_dir: #{ChefWorkflow::GeneralSupport.workflow_dir}"
+      puts "\tvm_file: #{ChefWorkflow::GeneralSupport.vm_file}"
+      puts "\tmachine_provisoner: #{ChefWorkflow::GeneralSupport.machine_provisioner}"
 
       puts "knife:"
       mute = %w[knife_config_template]

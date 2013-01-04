@@ -3,18 +3,6 @@ require 'fileutils'
 
 namespace :chef do
   namespace :clean do
-    desc "Clean up the ip registry for chef-workflow"
-    task :ips do
-      ChefWorkflow::IPSupport.singleton.reset
-      ChefWorkflow::IPSupport.singleton.write
-    end
-
-    desc "Clean up the temporary chef configuration for chef-workflow"
-    task :knife do
-      FileUtils.rm_rf(ChefWorkflow::KnifeSupport.singleton.chef_config_path)
-      FileUtils.rm_f(ChefWorkflow::KnifeSupport.singleton.knife_config_path)
-    end
-
     desc "Clean up the machines that a previous chef-workflow run generated"
     task :machines do
       with_scheduler do |s|
@@ -28,6 +16,6 @@ namespace :chef do
   desc "Clean up the entire chef-workflow directory and machines"
   task :clean => [ "chef:clean:machines", "chef_server:destroy" ] do
     ChefWorkflow::EC2Support.singleton.destroy_security_group
-    FileUtils.rm_rf(ChefWorkflow::GeneralSupport.singleton.workflow_dir)
+    FileUtils.rm_rf(ChefWorkflow::GeneralSupport.workflow_dir)
   end
 end

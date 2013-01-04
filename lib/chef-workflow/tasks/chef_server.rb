@@ -1,7 +1,7 @@
 require 'chef-workflow/task-helpers/with_scheduler'
 
 namespace :chef_server do
-  desc "Create a chef server with the #{ChefWorkflow::GeneralSupport.singleton.machine_provisioner} provisioner"
+  desc "Create a chef server with the #{ChefWorkflow::GeneralSupport.machine_provisioner} provisioner"
   task :create => [ "chef:clean" ] do
     chef_workflow_task 'bootstrap/db'
     Rake::Task["bootstrap:db"].invoke
@@ -16,7 +16,7 @@ namespace :chef_server do
       s.schedule_provision(
         'chef-server', 
         [
-          ChefWorkflow::GeneralSupport.singleton.machine_provisioner.new('chef-server', 1), 
+          ChefWorkflow::GeneralSupport.machine_provisioner.new('chef-server', 1), 
           ChefWorkflow::VM::ChefServerProvisioner.new
         ],
         []

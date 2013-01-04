@@ -26,7 +26,7 @@ namespace :test do
           s.schedule_provision(
             group_name,
             [
-              ChefWorkflow::GeneralSupport.singleton.machine_provisioner.new(group_name, 1),
+              ChefWorkflow::GeneralSupport.machine_provisioner.new(group_name, 1),
               kp
             ]
           )
