@@ -13,6 +13,7 @@ if defined? Rake::DSL
         Chef::Config.from_file(ChefWorkflow::KnifeSupport.singleton.knife_config_path)
         s = ChefWorkflow::Scheduler.new
         yield s
+        s.stop
       end
     end
   end

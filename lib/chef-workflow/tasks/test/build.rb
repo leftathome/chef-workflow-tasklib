@@ -32,6 +32,10 @@ namespace :test do
   task :full => [
     "chef_server:create",
     "test:build",
-    "chef:clean"
-  ]
+    "test:recipes"
+  ] do
+    # hack to get chef:clean to run again
+    (Rake::Task["chef:clean"].prerequisite_tasks + [Rake::Task["chef:clean"]]).each(&:reenable)
+    Rake::Task["chef:clean"].invoke
+  end
 end

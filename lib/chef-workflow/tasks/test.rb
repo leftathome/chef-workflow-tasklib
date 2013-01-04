@@ -11,7 +11,7 @@ end
 namespace :test do
   desc "Test recipes in the test_recipes configuration."
 
-  task :recipes => [ "recipes:cleanup" ] do
+  task :recipes => [ "test:recipes:cleanup" ] do
     with_scheduler do |s|
       s.run
 
