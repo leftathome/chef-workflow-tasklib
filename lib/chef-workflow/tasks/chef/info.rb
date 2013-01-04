@@ -24,9 +24,9 @@ namespace :chef do
 
     desc "Output some information about known IP allocations"
     task :ips do
-      ChefWorkflow::IPSupport.singleton.roles.each do |role|
+      ChefWorkflow::IPSupport.roles.each do |role|
         puts "Group: #{role}"
-        ChefWorkflow::IPSupport.singleton.get_role_ips(role).each do |ip|
+        ChefWorkflow::IPSupport.get_role_ips(role).each do |ip|
           puts "\t#{ip}"
         end
       end
@@ -37,17 +37,16 @@ namespace :chef do
       puts "general:"
       puts "\tworkflow_dir: #{ChefWorkflow::GeneralSupport.singleton.workflow_dir}"
       puts "\tvm_file: #{ChefWorkflow::GeneralSupport.singleton.vm_file}"
-      puts "\tchef_server_prison: #{ChefWorkflow::GeneralSupport.singleton.chef_server_prison}"
       puts "\tmachine_provisoner: #{ChefWorkflow::GeneralSupport.singleton.machine_provisioner}"
 
       puts "knife:"
       mute = %w[knife_config_template]
       ChefWorkflow::KnifeSupport::DEFAULTS.keys.reject { |x| mute.include?(x.to_s) }.each do |key|
-        puts "\t#{key}: #{ChefWorkflow::KnifeSupport.singleton.send(key)}"
+        puts "\t#{key}: #{ChefWorkflow::KnifeSupport.send(key)}"
       end
 
       puts "vagrant:"
-      puts "\tip subnet (/24): #{ChefWorkflow::IPSupport.singleton.subnet}"
+      puts "\tip subnet (/24): #{ChefWorkflow::IPSupport.subnet}"
       puts "\tbox url: #{ChefWorkflow::VagrantSupport.singleton.box_url}"
 
       puts "ec2:"

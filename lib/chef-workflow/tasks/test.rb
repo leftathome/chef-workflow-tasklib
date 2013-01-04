@@ -16,7 +16,7 @@ namespace :test do
       s.run
 
       groups =
-        ChefWorkflow::KnifeSupport.singleton.test_recipes.map do |recipe|
+        ChefWorkflow::KnifeSupport.test_recipes.map do |recipe|
           group_name = "recipe-#{recipe.gsub(/::/, '-')}"
 
           kp            = build_knife_provisioner
