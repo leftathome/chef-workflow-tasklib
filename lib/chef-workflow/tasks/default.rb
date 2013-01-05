@@ -1,5 +1,5 @@
 chef_workflow_task 'chef_server'
-chef_workflow_task 'cookbooks/upload'
+chef_workflow_task 'chef/cookbooks/upload'
 chef_workflow_task 'chef/upload'
 chef_workflow_task 'chef/clean'
 chef_workflow_task 'chef/build'
