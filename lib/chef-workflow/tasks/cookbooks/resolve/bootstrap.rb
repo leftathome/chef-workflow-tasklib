@@ -5,6 +5,3 @@ begin
   Rake::Task["cookbooks:update"].clear
 rescue
 end
-
-require 'chef-workflow/tasks/bootstrap/knife'
-require 'chef-workflow/tasks/cookbooks/resolve_and_upload'
