@@ -47,7 +47,7 @@ namespace :chef do
 
       puts "vagrant:"
       puts "\tip subnet (/24): #{ChefWorkflow::IPSupport.subnet}"
-      puts "\tbox url: #{ChefWorkflow::VagrantSupport.singleton.box_url}"
+      puts "\tbox url: #{ChefWorkflow::VagrantSupport.box_url}"
 
       puts "ec2:"
 
