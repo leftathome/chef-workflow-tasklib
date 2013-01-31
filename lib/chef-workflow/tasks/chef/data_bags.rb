@@ -26,7 +26,7 @@ namespace :chef do
           #     we're actually depending on this.
           fail if status != 0
 
-          bag_items = Dir[File.join(ChefWorkflow::KnifeSupport.data_bags_path, bag, '*')].
+          bag_items = Dir[File.join(ChefWorkflow::KnifeSupport.data_bags_path, bag, '*.{rb,js,json}')].
             select { |x| !File.directory?(x) }
           status = knife %W[data bag from file #{bag}] + bag_items
           fail if status != 0
