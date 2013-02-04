@@ -59,7 +59,7 @@ namespace :chef do
         security_groups
         security_group_open_ports
       ].each do |key|
-        puts "\t#{key}: #{ChefWorkflow::EC2Support.singleton.send(key)}"
+        puts "\t#{key}: #{ChefWorkflow::EC2Support.send(key)}"
       end
     end
   end
