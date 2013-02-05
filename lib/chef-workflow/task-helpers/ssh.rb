@@ -1,4 +1,4 @@
-require 'chef-workflow/helpers/ssh'
+require 'chef-workflow/support/ssh'
 
 if defined? Rake::DSL
   module Rake::DSL
