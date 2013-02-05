@@ -9,7 +9,7 @@ namespace :chef do
   namespace :info do
     desc "Output some information about provisioned machines"
     task :provisioned do
-      with_scheduler(false) do |s|
+      with_scheduler do |s|
         s.vm_groups.each do |key, values|
           puts "Group: #{key}"
           values.each do |value|

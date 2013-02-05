@@ -7,7 +7,7 @@ require 'chef-workflow/support/scheduler'
 require 'chef/config'
 
 if defined? Rake::DSL
-  module Rake::DSL 
+  module Rake::DSL
     def with_scheduler
       if File.exist?(ChefWorkflow::KnifeSupport.knife_config_path)
         Chef::Config.from_file(ChefWorkflow::KnifeSupport.knife_config_path)
