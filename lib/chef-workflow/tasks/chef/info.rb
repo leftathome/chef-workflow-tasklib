@@ -14,6 +14,7 @@ namespace :chef do
           puts "Group: #{key}"
           values.each do |value|
             puts "\t#{value.class.name} provisioner:"
+            value.name ||= key
             value.report.each do |line|
               puts "\t\t#{line}"
             end
