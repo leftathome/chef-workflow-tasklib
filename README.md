@@ -27,6 +27,9 @@ Some of the tasks it provides are:
 Most of the Meat is on the Wiki
 -------------------------------
 
+This project is a part of
+[chef-workflow](https://github.com/chef-workflow/chef-workflow).
+
 Our [wiki](https://github.com/chef-workflow/chef-workflow/wiki) contains
 a fair amount of information, including how to try chef-workflow without
 actually doing anything more than cloning a repository and running a few
