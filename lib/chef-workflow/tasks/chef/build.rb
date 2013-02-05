@@ -11,7 +11,7 @@ namespace :chef do
     role_name          = args[:role_name]
     number_of_machines = (args[:number_of_machines] || 1).to_i
 
-    with_scheduler(true) do |s|
+    with_scheduler do |s|
       kp = build_knife_provisioner
       kp.solr_check = false
 
