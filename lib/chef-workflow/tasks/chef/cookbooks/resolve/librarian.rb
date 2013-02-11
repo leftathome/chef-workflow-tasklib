@@ -6,10 +6,8 @@ namespace :chef do
   namespace :cookbooks do
     desc "Resolve cookbooks and populate using Librarian"
     task :resolve => [ "bootstrap:knife" ] do
-      if File.directory?(ChefWorkflow::KnifeSupport.cookbooks_path)
-        Bundler.with_clean_env do
-          sh "librarian-chef install --path #{ChefWorkflow::KnifeSupport.cookbooks_path}"
-        end
+      Bundler.with_clean_env do
+        sh "librarian-chef install --path #{ChefWorkflow::KnifeSupport.cookbooks_path}"
       end
     end
 

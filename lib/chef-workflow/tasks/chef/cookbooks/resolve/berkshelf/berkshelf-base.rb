@@ -6,10 +6,8 @@ namespace :chef do
   namespace :cookbooks do
     desc "Resolve cookbooks and populate using Berkshelf"
     task :resolve => [ "bootstrap:knife" ] do
-      if File.directory?(KnifeSupport.cookbooks_path)
-        Bundler.with_clean_env do
-          sh "berks install --#{$BERKSHELF_ARG} #{ChefWorkflow::KnifeSupport.cookbooks_path}"
-        end
+      Bundler.with_clean_env do
+        sh "berks install --#{$BERKSHELF_ARG} #{ChefWorkflow::KnifeSupport.cookbooks_path}"
       end
     end
 
