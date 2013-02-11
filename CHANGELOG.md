@@ -1,4 +1,7 @@
-* 0.2.0 (unreleased)
+* 0.2.1 February 11, 2012
+  * A few common situations would cause cookbook resolvers to not work if they
+    were integrated.
+* 0.2.0 February 8, 2012
   * **breaking change**: the 'cookbooks' namespace has been moved to chef:cookbooks
   * chef:build builds a server or set of servers based on a server group. Uses
     the provisioner and scheduler, and is tracked no differently than
