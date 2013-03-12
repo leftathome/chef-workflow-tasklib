@@ -1,3 +1,15 @@
+* 0.2.2 March 12, 2012
+  * New tasks:
+    * `chef:init` creates a chef server and fills it with your chef repository.
+      Shorthand for `chef_server:create chef:upload`.
+    * `chef:destroy` is the inverse of `chef:build` and can be used to snipe
+      server groups. Requires a role/group name and deprovisions them through
+      the common path.
+  * When cookbook resolvers were used and exited non-zero, the exit got
+    swallowed and processing continued. They now abort like they should.
+  * `chef:build`, `chef:converge`, and `chef:destroy` are now repeatable tasks,
+    so you can do things like this: `be rake chef:build[foo] chef:build[bar]`
+    and it does what you expect it to do.
 * 0.2.1 February 11, 2012
   * A few common situations would cause cookbook resolvers to not work if they
     were integrated.
