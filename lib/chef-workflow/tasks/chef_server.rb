@@ -14,9 +14,9 @@ namespace :chef_server do
     with_scheduler do |s|
       s.serial = true
       s.schedule_provision(
-        'chef-server', 
+        'chef-server',
         [
-          ChefWorkflow::GeneralSupport.machine_provisioner.new('chef-server', 1), 
+          ChefWorkflow::GeneralSupport.machine_provisioner.new('chef-server', 1),
           ChefWorkflow::VM::ChefServerProvisioner.new
         ],
         []
