@@ -4,6 +4,8 @@ require 'chef-workflow/support/vm/helpers/knife'
 namespace :chef do
   desc "Tear down a server group"
   task :destroy, :role_name do |task, args|
+    task.reenable
+
     unless args[:role_name]
       raise 'You must supply a role name to chef:destroy'
     end

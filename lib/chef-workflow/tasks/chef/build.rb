@@ -4,6 +4,8 @@ require 'chef-workflow/support/vm/helpers/knife'
 namespace :chef do
   desc "build and bootstrap a machine with a role in the run_list"
   task :build, :role_name, :number_of_machines do |task, args|
+    task.reenable
+
     unless args[:role_name]
       raise 'You must supply a role name to chef:build'
     end
