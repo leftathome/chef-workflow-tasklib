@@ -56,4 +56,5 @@ These companies have assisted by donating time, financial resources, and
 employment to those working on chef-workflow. Supporting OSS is really really
 cool and we should reciprocate.
 
+* [Sourcefire](http://www.sourcefire.com/)
 * [HotelTonight](http://www.hoteltonight.com) 
