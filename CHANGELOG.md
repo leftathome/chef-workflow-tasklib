@@ -1,4 +1,7 @@
-* 0.2.2 March 12, 2012
+* 0.2.3 April 4, 2013
+  * the recently added `chef:destroy` task did some things that could get the
+    state management into a very angry state.
+* 0.2.2 March 12, 2013
   * New tasks:
     * `chef:init` creates a chef server and fills it with your chef repository.
       Shorthand for `chef_server:create chef:upload`.
@@ -10,10 +13,10 @@
   * `chef:build`, `chef:converge`, and `chef:destroy` are now repeatable tasks,
     so you can do things like this: `be rake chef:build[foo] chef:build[bar]`
     and it does what you expect it to do.
-* 0.2.1 February 11, 2012
+* 0.2.1 February 11, 2013
   * A few common situations would cause cookbook resolvers to not work if they
     were integrated.
-* 0.2.0 February 8, 2012
+* 0.2.0 February 8, 2013
   * **breaking change**: the 'cookbooks' namespace has been moved to chef:cookbooks
   * chef:build builds a server or set of servers based on a server group. Uses
     the provisioner and scheduler, and is tracked no differently than
