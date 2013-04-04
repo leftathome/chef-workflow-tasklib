@@ -13,7 +13,8 @@ namespace :chef do
     role_name = args[:role_name]
 
     with_scheduler do |s|
-      s.teardown_group(role_name)
+      s.run
+      s.teardown_group(role_name, false)
     end
   end
 end
